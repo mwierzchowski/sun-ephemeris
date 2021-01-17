@@ -27,21 +27,6 @@ spring.groovy.template:
   check-template-location: false
   enabled: false
 
-# Persistence
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/dev?currentSchema=${schemaName}
-    username: dev
-    password: dev
-    initialization-mode: always
-  jpa:
-    open-in-view: false
-  liquibase.change-log: classpath:liquibase-changelog.sql
-
-decorator.datasource.p6spy:
-  enable-logging: false
-  log-format: '(connection %(connectionId) - %(category)) %(sql)'
-
 # Resilience
 resilience4j.retry.instances:
   dummy-checker:
