@@ -16,7 +16,7 @@ plugins {
 version = gitVersion()
 sourceCompatibility = 15
 group = "com.github.mwierzchowski.sun"
-description = "Microservice that provides sun ephemeris as stream or events as well as REST API"
+description = "Microservice that provides sun ephemeris as a stream of events or REST API"
 
 repositories {
 	mavenCentral()
