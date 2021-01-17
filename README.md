@@ -105,9 +105,7 @@ Once started, following services are available:
 
 Service                                                               | URL                         | Credentials
 ----------------------------------------------------------------------|-----------------------------|----------------------------
-[PostgreSQL](https://www.postgresql.org)                              | http://localhost:5432       | `dev` / `dev`
-[Redis](https://redislabs.com)                                        | http://localhost:6379       | NA
-[pgAdmin](https://www.pgadmin.org)                                    | http://localhost:81         | `admin@localhost` / `admin` 
+[Redis](https://redislabs.com)                                        | http://localhost:6379       | NA 
 [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin) | http://localhost:82         | `admin` / `admin`
 [Swagger UI](https://swagger.io/tools/swagger-ui/)                    | http://localhost:83/swagger | NA 
 
