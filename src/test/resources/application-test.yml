@@ -2,10 +2,7 @@
 logging.level:
   ${project.group}: DEBUG
 
-decorator.datasource.p6spy.enable-logging: true
 spring.boot.admin.client.enabled: false
-
-spring.datasource.url: 'jdbc:postgresql://localhost:\${embedded.postgresql.port}/dev?currentSchema=${schemaName}'
 
 spring.redis:
   port: '\${embedded.redis.port}'

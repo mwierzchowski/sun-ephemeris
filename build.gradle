@@ -35,7 +35,6 @@ ext {
 	mapStructVersion = "1.4.1.Final"
 	springDocVersion = "1.5.0"
 	shedlockVersion = "4.15.1"
-	p6spyVersion = "1.6.2"
 	swaggerAnnotationsVersion = "1.5.22"
 	findbugsJsr305Version = "3.0.2"
 	resilience4jVersion = "1.6.1"
@@ -52,13 +51,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation "org.springdoc:springdoc-openapi-webmvc-core:$springDocVersion"
-
-	// Database
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	implementation "org.postgresql:postgresql"
-	implementation "org.liquibase:liquibase-core"
-	implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:$p6spyVersion"
-	testImplementation "com.playtika.testcontainers:embedded-postgresql:$playtikaVersion"
 
 	// Redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
