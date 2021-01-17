@@ -1,41 +1,12 @@
-Dummy Service
+Sun Ephemeris
 =============
 
-![CI/CD](https://github.com/mwierzchowski/dummy-service/workflows/CI/CD/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_dummy-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=mwierzchowski_dummy-service)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_dummy-service&metric=ncloc)](https://sonarcloud.io/dashboard?id=mwierzchowski_dummy-service)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_dummy-service&metric=coverage)](https://sonarcloud.io/dashboard?id=mwierzchowski_dummy-service)
+![CI/CD](https://github.com/mwierzchowski/sun-ephemeris/workflows/CI/CD/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_sun-ephemeris&metric=alert_status)](https://sonarcloud.io/dashboard?id=mwierzchowski_sun-ephemeris)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_sun-ephemeris&metric=ncloc)](https://sonarcloud.io/dashboard?id=mwierzchowski_sun-ephemeris)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_sun-ephemeris&metric=coverage)](https://sonarcloud.io/dashboard?id=mwierzchowski_sun-ephemeris)
 
-> **TODO** - In cloned project, remove badge URLs above (replace instructions in the setup section)  
-> 
-> **TODO** - In cloned project, update description 
-
-This is a template project for [Spring Boot](https://spring.io/projects/spring-boot) based microservices. It's goal is
-to simplify starting a new project with popular features ready out of the box and nothing more. Since this project is
-simplified, without additional changes it is rather intended for internal (not public API) or hobby projects. Template
-covers also CI/CD workflows and integration with a quality scan.
-
-### But why?
-
-> **TODO** - In cloned project, remove this section
-
-One may ask: *Why not to use [Spring Initializr](https://start.spring.io) or [JHipster](https://www.jhipster.tech)
-instead of the template?* Well, there are few reasons...
-1. I am really picky when it comes to code standards (see above). Initializr and JHipster are both great tools
-   (actually, this project was initially started with Initializr) but after using them I always find myself
-   correcting tons of small *imperfections* here and there.
-1. Initializr does not support [Spock](http://spockframework.org) which is my favourite tests framework.
-1. JHipster generates lots of *super-must-have-cloud-code* (after all, its hipster stuff ;-)). It is great when you try
-   to spin a startup, but in many cases it is superfluous for small - internal or hobby - projects.
-1. Both tools do not cover CI/CD workflows.
-
-Another interesting question: *Why not to use one of [zillion](https://github.com/search?q=spring+boot+template)
-(actually, around 2-3k) template projects available on the GitHub?* Indeed, some of them could be close to my needs
-but...
-1. I started one of my hobby projects as monolith and just later decided to cut it into microservice pieces. So I had
-   a need for a template similar as much as possible to the original project's structure to avoid extra effort.
-1. Creating this template was an interesting exercise.
-1. Did I mention I am picky? Even good templates do not cover all of my requirements.
+Microservice that provides sun ephemeris as stream or events as well as REST API.
 
 ### Bill of materials
 Project is composed of the following tools:
@@ -104,53 +75,6 @@ Plugin                                                                    | Comm
 
 **Please note:** Without some of these plugins, IDEs may highlight references to generated code (e.g. Lombok properties
 or MapStruct mappers) as errors. It is annoying but do not affect building or running application.
-
-Project setup
--------------
-
-> **TODO** - In cloned project, remove this section
-
-### Clone repository
-
-**Please note:** One should already have GitHub account.
-
-1. [Create a new repository from this template](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
-1. Import/clone project to IDE
-1. Update `build.gradle`
-    1. Change application group and description.
-    1. Reload Gradle project.
-1. Update README
-    1. Update or remove sections marked with TODO flag 
-    1. Optional - add CI/CD badge to README (GitHub Actions / CICD Workflow / '3 dots button')
-    1. Optional - change license.
-1. Push changes to GitHub.
-
-**Please note:** Application root package, and many of the template classes/resources hold *dummy* label. It is
-recommended to change these names after a project setup.
-
-### SonarCloud integration
-
-**Please note:** One should already have [SonarCloud](https://sonarcloud.io) account authorized as an application in
-GitHub. Additionally, CI/CD script assumes that one logs to SonarCloud with GitHub account.
-
-1. Add [new project analyze](https://sonarcloud.io/projects/create) in SonarCloud (choose *GitHub Actions* as
-   an analysis method).
-1. Copy SonarCloud token and add to GitHub repository secrets as `SONAR_TOKEN`.
-1. Optional - add SonarCloud badges to README (SonarCloud project home page, lower right corner): 
-    1. Quality Gate Status
-    1. Lines of Code
-    1. Coverage
-1. In SonarCloud, define new code based on a previous version (Administration / New Code).
-1. Push changes to GitHub. 
-
-### DockerHub integration
-
-**Please note:** One should already have [DockerHub](https://hub.docker.com) account. Additionally, CI/CD script
-assumes that both GitHub and DockerHub share the same account id.
-
-1. Create new DockerHub [repository](https://hub.docker.com/repositories).
-1. Add DockerHub password to GitHub repository secrets as `DOCKERHUB_PASSWORD`.
-1. Service image will be published to DockerHub on the next release.
 
 How to run...
 -------------
