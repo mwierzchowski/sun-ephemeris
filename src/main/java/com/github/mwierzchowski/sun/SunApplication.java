@@ -1,4 +1,4 @@
-package com.github.mwierzchowski.dummy;
+package com.github.mwierzchowski.sun;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,13 +17,13 @@ import java.time.Clock;
 @EnableJpaAuditing
 @EnableTransactionManagement
 @SpringBootApplication
-public class DummyApplication {
+public class SunApplication {
 	@Bean
 	Clock systemClock() {
 		return Clock.systemDefaultZone();
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(DummyApplication.class, args);
+		SpringApplication.run(SunApplication.class, args);
 	}
 }

@@ -1,4 +1,4 @@
-package com.github.mwierzchowski.dummy.ext;
+package com.github.mwierzchowski.sun.ext;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.sunrisesunset.invoker.ApiClient;
 public class SunriseSunsetConfig {
     @Bean
     ApiClient sunriseSunsetApiClient(Environment env) {
-        var path = env.getRequiredProperty("dummy.sunrise-sunset.path");
+        var path = env.getRequiredProperty("sun-ephemeris.sunrise-sunset.path");
         return new ApiClient(new RestTemplate())
                 .setBasePath(path);
     }

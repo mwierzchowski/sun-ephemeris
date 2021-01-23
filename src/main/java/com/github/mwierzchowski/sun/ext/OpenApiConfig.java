@@ -1,4 +1,4 @@
-package com.github.mwierzchowski.dummy.ext;
+package com.github.mwierzchowski.sun.ext;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

@@ -1,4 +1,4 @@
-package com.github.mwierzchowski.dummy.ext;
+package com.github.mwierzchowski.sun.ext;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;
