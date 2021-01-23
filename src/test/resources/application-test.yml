@@ -10,7 +10,5 @@ spring.redis:
   password: '\${embedded.redis.password}'
 
 # Application specific
-dummy:
-  checker.cron: '-'
-  publisher.cron: '-'
+sun-ephemeris:
   sunrise-sunset.path: 'http://localhost:\${wiremock.server.port}/sunrise-sunset'
