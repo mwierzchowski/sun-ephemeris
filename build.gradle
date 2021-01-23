@@ -33,7 +33,6 @@ ext {
 	schemaName = project.name.replace('-', '_')
 	springBootAdminVersion = "2.3.1"
 	springDocVersion = "1.5.0"
-	shedlockVersion = "4.15.1"
 	swaggerAnnotationsVersion = "1.5.22"
 	findbugsJsr305Version = "3.0.2"
 	resilience4jVersion = "1.6.1"
@@ -54,10 +53,6 @@ dependencies {
 	// Redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
 	testImplementation "com.playtika.testcontainers:embedded-redis:$playtikaVersion"
-
-	// Scheduler lock
-	implementation "net.javacrumbs.shedlock:shedlock-spring:$shedlockVersion"
-	implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:$shedlockVersion"
 
 	// Resilience
 	implementation "io.github.resilience4j:resilience4j-spring-boot2:$resilience4jVersion"
