@@ -38,12 +38,8 @@ resilience4j.retry.instances:
       - java.lang.Exception
 
 # Application
-dummy:
+sun-ephemeris:
   sunrise-sunset.path: 'https://api.sunrise-sunset.org:443'
   location:
     latitude: 52.23
     longitude: 21.01
-  checker.cron: '0 0 0 * * *'
-  publisher:
-    cron: '0 * * * * *'
-    topic: 'sunset-task'
