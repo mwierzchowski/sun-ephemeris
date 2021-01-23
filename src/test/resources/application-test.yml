@@ -1,5 +1,6 @@
 # Logging levels
 logging.level:
+  root: INFO
   ${project.group}: DEBUG
 
 spring.boot.admin.client.enabled: false
