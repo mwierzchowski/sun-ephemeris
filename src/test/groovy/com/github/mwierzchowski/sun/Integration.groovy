@@ -1,4 +1,4 @@
-package com.github.mwierzchowski.dummy
+package com.github.mwierzchowski.sun
 
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
