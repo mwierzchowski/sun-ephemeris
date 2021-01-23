@@ -16,7 +16,7 @@ plugins {
 version = gitVersion()
 sourceCompatibility = 15
 group = "com.github.mwierzchowski.sun"
-description = "Microservice that provides sun ephemeris as a stream of events or REST API"
+description = "Microservice that pushes sun ephemeris events to Redis queue and exposes REST API"
 
 repositories {
 	mavenCentral()
@@ -32,7 +32,6 @@ dependencyManagement {
 ext {
 	schemaName = project.name.replace('-', '_')
 	springBootAdminVersion = "2.3.1"
-	mapStructVersion = "1.4.1.Final"
 	springDocVersion = "1.5.0"
 	shedlockVersion = "4.15.1"
 	swaggerAnnotationsVersion = "1.5.22"
@@ -71,10 +70,6 @@ dependencies {
 	// Lombok
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
-
-	// MapStruct
-	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
-	implementation "org.mapstruct:mapstruct:$mapStructVersion"
 
 	// General testing
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
