@@ -38,7 +38,7 @@ public class SunEphemerisCalculator {
         return sunEphemerisOf(response.getResults());
     }
 
-    // TODO cache evict after 24 hours
+    // TODO cache evict after few days
 
     private SunEphemeris sunEphemerisOf(SunriseSunsetResponseResults results) {
         var sunEphemeris = new SunEphemeris();
