@@ -41,7 +41,7 @@ public class SunEventsControllerV1 {
         }
         LOG.debug("Calculating sun events for {}", date);
         return calculator.sunEphemerisFor(date)
-                .eventStream()
+                .stream()
                 .collect(toList());
     }
 

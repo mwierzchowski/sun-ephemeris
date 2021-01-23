@@ -16,17 +16,17 @@ public class SunEphemeris implements Serializable {
         events.put(type, offsetDateTime.toInstant());
     }
 
-    public Stream<SunEvent> eventStream() {
+    public Stream<SunEvent> stream() {
         return events.entrySet().stream().map(this::toSunEvent);
     }
 
     public SunEvent firstEvent() {
-        return eventStream().findFirst().get();
+        return stream().findFirst().get();
     }
 
     public Optional<SunEvent> firstEventAfterNow() {
         var now = Instant.now();
-        return eventStream().filter(event -> event.getTimestamp().isAfter(now)).findFirst();
+        return stream().filter(event -> event.getTimestamp().isAfter(now)).findFirst();
     }
 
     private SunEvent toSunEvent(Map.Entry<SunEventType, Instant> entry) {
