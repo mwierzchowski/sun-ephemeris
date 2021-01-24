@@ -41,7 +41,7 @@ public class SunEventPublisher {
         LOG.warn("Planning events based on today ephemeris failed, trying yesterday", throwable);
         var yesterday = LocalDate.now(clock).minusDays(1);
         provider.sunEphemerisFor(yesterday).stream()
-                .map(old -> new SunEvent(old.getType(), old.getTimestamp().plusSeconds(24 * 60 * 60)))
+                .map(old -> new SunEvent(old.getType(), old.getTimestamp().plusSeconds(24L * 60 * 60)))
                 .forEach(this::planEvent);
     }
 
