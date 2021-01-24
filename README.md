@@ -6,7 +6,7 @@ Sun Ephemeris
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_sun-ephemeris&metric=ncloc)](https://sonarcloud.io/dashboard?id=mwierzchowski_sun-ephemeris)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mwierzchowski_sun-ephemeris&metric=coverage)](https://sonarcloud.io/dashboard?id=mwierzchowski_sun-ephemeris)
 
-Microservice that provides sun ephemeris as a stream of events or REST API.
+Microservice that provides sun ephemeris as a stream of events or over REST API.
 
 ### Bill of materials
 Project is composed of the following tools:
