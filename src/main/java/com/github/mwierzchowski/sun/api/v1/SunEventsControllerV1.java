@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class SunEventsControllerV1 {
     public SunEvent getNextEvent() {
         LOG.debug("Calculating next sun event after now");
         var today = LocalDate.now(clock);
-        return calculator.sunEphemerisFor(today).firstEventAfterNow()
+        var now = Instant.now(clock);
+        return calculator.sunEphemerisFor(today).firstEventAfter(now)
                 .orElseGet(() -> calculator.sunEphemerisFor(today.plusDays(1)).firstEvent());
     }
 }

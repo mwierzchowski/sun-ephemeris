@@ -24,9 +24,8 @@ public class SunEphemeris implements Serializable {
         return stream().findFirst().get();
     }
 
-    public Optional<SunEvent> firstEventAfterNow() {
-        var now = Instant.now();
-        return stream().filter(event -> event.getTimestamp().isAfter(now)).findFirst();
+    public Optional<SunEvent> firstEventAfter(Instant start) {
+        return stream().filter(event -> event.getTimestamp().isAfter(start)).findFirst();
     }
 
     private SunEvent toSunEvent(Map.Entry<SunEventType, Instant> entry) {
