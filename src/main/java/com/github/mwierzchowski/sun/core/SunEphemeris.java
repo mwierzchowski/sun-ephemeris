@@ -1,5 +1,7 @@
 package com.github.mwierzchowski.sun.core;
 
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -8,6 +10,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+@EqualsAndHashCode
 public class SunEphemeris implements Serializable {
     private SortedMap<SunEventType, Instant> events = new TreeMap<>();
 
