@@ -1,6 +1,6 @@
 package com.github.mwierzchowski.sun.api.v1;
 
-import com.github.mwierzchowski.sun.core.SunEphemerisCalculator;
+import com.github.mwierzchowski.sun.core.SunEphemerisProvider;
 import com.github.mwierzchowski.sun.core.SunEvent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/v1/events")
 @Tag(name = "Sun events", description = "Sun events resource")
 public class SunEventsControllerV1 {
-    private final SunEphemerisCalculator calculator;
+    private final SunEphemerisProvider provider;
     private final Clock clock;
 
     @GetMapping(path = "/")
@@ -40,8 +40,8 @@ public class SunEventsControllerV1 {
             date = LocalDate.now(clock);
             LOG.debug("No date provided, assuming today");
         }
-        LOG.debug("Calculating sun events for {}", date);
-        return calculator.sunEphemerisFor(date)
+        LOG.debug("Request for {} sun events", date);
+        return provider.sunEphemerisFor(date)
                 .stream()
                 .collect(toList());
     }
@@ -50,10 +50,10 @@ public class SunEventsControllerV1 {
     @Operation(summary = "Next sun event to happen from now")
     @ApiResponse(responseCode = "200", description = "Sun event")
     public SunEvent getNextEvent() {
-        LOG.debug("Calculating next sun event after now");
+        LOG.debug("Request for next sun event after now");
         var today = LocalDate.now(clock);
         var now = Instant.now(clock);
-        return calculator.sunEphemerisFor(today).firstEventAfter(now)
-                .orElseGet(() -> calculator.sunEphemerisFor(today.plusDays(1)).firstEvent());
+        return provider.sunEphemerisFor(today).firstEventAfter(now)
+                .orElseGet(() -> provider.sunEphemerisFor(today.plusDays(1)).firstEvent());
     }
 }

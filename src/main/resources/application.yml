@@ -31,7 +31,7 @@ spring.groovy.template:
 
 # Resilience
 resilience4j.retry.instances:
-  sun-ephemeris-calculator:
+  SunEphemerisProvider:
     maxRetryAttempts: 6
     waitDuration: 1s
     enableExponentialBackoff: true

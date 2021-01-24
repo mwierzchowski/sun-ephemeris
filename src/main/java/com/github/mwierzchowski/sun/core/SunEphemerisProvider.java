@@ -3,7 +3,6 @@ package com.github.mwierzchowski.sun.core;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -20,20 +19,18 @@ import static com.github.mwierzchowski.sun.core.SunEventType.SUNSET;
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = {"sun-ephemeris-calculator"})
 @RequiredArgsConstructor
-public class SunEphemerisCalculator {
+public class SunEphemerisProvider {
     private final SunriseSunsetApi api;
     private final Environment env;
 
-    @Cacheable
-    @Retry(name = "sun-ephemeris-calculator")
+    @Retry(name = "SunEphemerisProvider")
+    @Cacheable(cacheNames = {"sun-ephemeris.provider"})
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
-        var strDate = date.toString();
         var latitude = env.getRequiredProperty("sun-ephemeris.location.latitude", Double.class);
         var longitude = env.getRequiredProperty("sun-ephemeris.location.longitude", Double.class);
-        var response = api.sunriseSunset(latitude, longitude, strDate, 0);
+        var response = api.sunriseSunset(latitude, longitude, date.toString(), 0);
         LOG.debug("Sunrise-Sunset response: {}", response);
         return sunEphemerisOf(response.getResults());
     }
