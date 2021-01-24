@@ -41,8 +41,7 @@ public class SunEventsControllerV1 {
             LOG.debug("No date provided, assuming today");
         }
         LOG.debug("Request for {} sun events", date);
-        return provider.sunEphemerisFor(date)
-                .stream()
+        return provider.sunEphemerisFor(date).stream()
                 .collect(toList());
     }
 
@@ -53,7 +52,8 @@ public class SunEventsControllerV1 {
         LOG.debug("Request for next sun event after now");
         var today = LocalDate.now(clock);
         var now = Instant.now(clock);
-        return provider.sunEphemerisFor(today).firstEventAfter(now)
+        return provider.sunEphemerisFor(today)
+                .firstEventAfter(now)
                 .orElseGet(() -> provider.sunEphemerisFor(today.plusDays(1)).firstEvent());
     }
 }
