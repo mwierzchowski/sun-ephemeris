@@ -54,7 +54,7 @@ Tool                                                             | Version      
 -----------------------------------------------------------------|----------------|----------------------------------------------------------------------------------------------------------
 [Git](https://git-scm.com/)                                      | `latest`       |
 JDK                                                              | `15`           | [AdoptOpenJDK](https://adoptopenjdk.net/archive.html?variant=openjdk14&jvmVariant=hotspot) is recommended
-IDE                                                              | `latest`       | [IntelliJ IDEA](https://www.jetbrains.com/idea/) is recommended
+IDE                                                              | `latest`       | e.g. [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 [Docker Desktop](https://www.docker.com/products/docker-desktop) | `2.4` or newer |
 
 **Please note:** Project does not depend on IntelliJ IDEA specific features. Feel free to use [Eclipse](https://www.eclipse.org)
