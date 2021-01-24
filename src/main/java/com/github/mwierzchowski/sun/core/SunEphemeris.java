@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 @EqualsAndHashCode
 public class SunEphemeris implements Serializable {
-    private SortedMap<SunEventType, Instant> events = new TreeMap<>();
+    private final SortedMap<SunEventType, Instant> events = new TreeMap<>();
 
     public void add(SunEventType type, OffsetDateTime offsetDateTime) {
         events.put(type, offsetDateTime.toInstant());
