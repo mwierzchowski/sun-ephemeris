@@ -24,9 +24,9 @@ public class SunEventPublisher {
     public static final String LOCK_NAME = "sun-ephemeris.publish-lock";
 
     private final SunEphemerisProvider provider;
-    private final Clock clock;
     private final TaskScheduler scheduler;
     private final RedisTemplate<String, Object> redis;
+    private final Clock clock;
     private final Environment env;
 
     @Scheduled(cron = "${sun-ephemeris.publish.cron}")
