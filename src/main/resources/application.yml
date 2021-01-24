@@ -38,10 +38,20 @@ resilience4j.retry.instances:
     exponentialBackoffMultiplier: 2
     retryExceptions:
       - java.lang.Exception
+  SunEventPublisher:
+    maxRetryAttempts: 120
+    waitDuration: 60s
+    enableExponentialBackoff: false
+    retryExceptions:
+      - java.lang.Exception
 
 # Application
 sun-ephemeris:
+  init-on-startup: true
   sunrise-sunset.path: 'https://api.sunrise-sunset.org:443'
   location:
     latitude: 52.23
     longitude: 21.01
+  publish:
+    cron: '0 0 0 * * *'
+    lock-duration: 360

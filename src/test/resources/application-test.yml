@@ -11,4 +11,6 @@ spring.redis:
 
 # Application specific
 sun-ephemeris:
+  init-on-startup: false
+  publish.cron: '-'
   sunrise-sunset.path: 'http://localhost:\${wiremock.server.port}/sunrise-sunset'
