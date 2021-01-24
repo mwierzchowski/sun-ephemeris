@@ -50,10 +50,10 @@ public class SunEventPublisher {
         if (event.isStale(clock)) {
             LOG.warn("Event {} will not be published today since it passed at {}",
                     event.getType(), event.getLocalDateTime(clock).toLocalTime());
-            return;
+        } else {
+            scheduler.schedule(new Task(event), event.getTimestamp());
+            LOG.info("Event {} scheduled for publishing today at {}", event.getType(), event.getLocalDateTime(clock).toLocalTime());
         }
-        scheduler.schedule(new Task(event), event.getTimestamp());
-        LOG.info("Event {} scheduled for publishing today at {}", event.getType(), event.getLocalDateTime(clock).toLocalTime());
     }
 
     @RequiredArgsConstructor
@@ -66,10 +66,10 @@ public class SunEventPublisher {
             var lockFlag = redis.opsForValue().setIfAbsent(LOCK_NAME, randomUUID(), ofSeconds(lockDuration));
             if (FALSE.equals(lockFlag)) {
                 LOG.debug("Dropping event {} (not a leader)", event.getType());
-                return;
+            } else {
+                LOG.info("Publishing event {}", event.getType());
+                redis.convertAndSend(QUEUE_NAME, event);
             }
-            LOG.info("Publishing event {}", event.getType());
-            redis.convertAndSend(QUEUE_NAME, event);
         }
     }
 }
