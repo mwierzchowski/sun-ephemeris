@@ -29,10 +29,10 @@ public class SunEphemerisCalculator {
     @Cacheable
     @Retry(name = "sun-ephemeris-calculator")
     public SunEphemeris sunEphemerisFor(LocalDate date) {
+        LOG.info("Requesting sun ephemeris for {}", date);
         var strDate = date.toString();
         var latitude = env.getRequiredProperty("sun-ephemeris.location.latitude", Double.class);
         var longitude = env.getRequiredProperty("sun-ephemeris.location.longitude", Double.class);
-        LOG.debug("Requesting sun ephemeris for date={}, lat={}, lon={}", strDate, latitude, longitude);
         var response = api.sunriseSunset(latitude, longitude, strDate, 0);
         LOG.debug("Sunrise-Sunset response: {}", response);
         return sunEphemerisOf(response.getResults());
