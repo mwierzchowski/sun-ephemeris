@@ -38,8 +38,6 @@ public class SunEphemerisCalculator {
         return sunEphemerisOf(response.getResults());
     }
 
-    // TODO cache evict after few days
-
     private SunEphemeris sunEphemerisOf(SunriseSunsetResponseResults results) {
         var sunEphemeris = new SunEphemeris();
         sunEphemeris.add(DAWN, results.getCivilTwilightBegin());
