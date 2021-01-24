@@ -1,6 +1,5 @@
-package com.github.mwierzchowski.sun
+package com.github.mwierzchowski.sun.core
 
-import com.github.mwierzchowski.sun.core.SunEvent
 import spock.lang.Specification
 
 import java.time.Clock

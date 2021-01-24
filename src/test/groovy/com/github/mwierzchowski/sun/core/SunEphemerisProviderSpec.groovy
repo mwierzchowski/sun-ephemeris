@@ -1,7 +1,6 @@
-package com.github.mwierzchowski.sun
+package com.github.mwierzchowski.sun.core
 
-import com.github.mwierzchowski.sun.core.SunEphemerisProvider
-import com.github.mwierzchowski.sun.core.SunEventType
+import com.github.mwierzchowski.sun.Integration
 import com.github.tomakehurst.wiremock.matching.UrlPattern
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
