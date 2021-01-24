@@ -47,12 +47,12 @@ public class SunEventPublisher {
     }
 
     private void planEvent(SunEvent event) {
+        var eventTime = event.getLocalDateTime(clock).toLocalTime();
         if (event.isStale(clock)) {
-            LOG.warn("Event {} will not be published today since it passed at {}",
-                    event.getType(), event.getLocalDateTime(clock).toLocalTime());
+            LOG.warn("Event {} will not be published today since it passed at {}", event.getType(), eventTime);
         } else {
             scheduler.schedule(new Task(event), event.getTimestamp());
-            LOG.info("Event {} scheduled for publishing today at {}", event.getType(), event.getLocalDateTime(clock).toLocalTime());
+            LOG.info("Event {} scheduled for publishing today at {}", event.getType(), eventTime);
         }
     }
 
