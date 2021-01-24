@@ -3,7 +3,6 @@ package com.github.mwierzchowski.sun.core;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.util.Map;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -17,7 +16,8 @@ public class SunEphemeris implements Serializable {
     }
 
     public Stream<SunEvent> stream() {
-        return events.entrySet().stream().map(this::toSunEvent);
+        return events.entrySet().stream()
+                .map(entry -> new SunEvent(entry.getKey(), entry.getValue()));
     }
 
     public SunEvent firstEvent() {
@@ -27,12 +27,5 @@ public class SunEphemeris implements Serializable {
 
     public Optional<SunEvent> firstEventAfter(Instant start) {
         return stream().filter(event -> event.getTimestamp().isAfter(start)).findFirst();
-    }
-
-    private SunEvent toSunEvent(Map.Entry<SunEventType, Instant> entry) {
-        var event = new SunEvent();
-        event.setType(entry.getKey());
-        event.setTimestamp(entry.getValue());
-        return event;
     }
 }

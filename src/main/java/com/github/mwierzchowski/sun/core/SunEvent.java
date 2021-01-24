@@ -1,6 +1,8 @@
 package com.github.mwierzchowski.sun.core;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Clock;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 import static java.time.Instant.now;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SunEvent implements Serializable {
     private SunEventType type;
     private Instant timestamp;
