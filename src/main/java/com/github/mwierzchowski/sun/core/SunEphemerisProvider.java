@@ -21,21 +21,23 @@ import static com.github.mwierzchowski.sun.core.SunEventType.SUNSET;
 @Service
 @RequiredArgsConstructor
 public class SunEphemerisProvider {
+    public static final String CACHE_NAME = "sun-ephemeris.provider";
+
     private final SunriseSunsetApi api;
     private final Environment env;
 
     @Retry(name = "SunEphemerisProvider")
-    @Cacheable(cacheNames = {"sun-ephemeris.provider"})
+    @Cacheable(cacheNames = {CACHE_NAME})
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
         var latitude = env.getRequiredProperty("sun-ephemeris.location.latitude", Double.class);
         var longitude = env.getRequiredProperty("sun-ephemeris.location.longitude", Double.class);
         var response = api.sunriseSunset(latitude, longitude, date.toString(), 0);
         LOG.debug("Sunrise-Sunset response: {}", response);
-        return sunEphemerisOf(response.getResults());
+        return sunEphemerisFrom(response.getResults());
     }
 
-    private SunEphemeris sunEphemerisOf(SunriseSunsetResponseResults results) {
+    private SunEphemeris sunEphemerisFrom(SunriseSunsetResponseResults results) {
         var sunEphemeris = new SunEphemeris();
         sunEphemeris.add(DAWN, results.getCivilTwilightBegin());
         sunEphemeris.add(SUNRISE, results.getSunrise());
