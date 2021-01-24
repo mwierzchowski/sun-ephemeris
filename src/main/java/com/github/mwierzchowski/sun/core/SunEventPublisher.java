@@ -51,8 +51,8 @@ public class SunEventPublisher {
         if (event.isStale(clock)) {
             LOG.warn("Event {} will not be published today since it passed at {}", event.getType(), eventTime);
         } else {
+            LOG.info("Scheduling event {} for publishing today at {}", event.getType(), eventTime);
             scheduler.schedule(new Task(event), event.getTimestamp());
-            LOG.info("Event {} scheduled for publishing today at {}", event.getType(), eventTime);
         }
     }
 
