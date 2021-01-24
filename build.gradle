@@ -30,7 +30,6 @@ dependencyManagement {
 }
 
 ext {
-	schemaName = project.name.replace('-', '_')
 	springBootAdminVersion = "2.3.1"
 	springDocVersion = "1.5.0"
 	swaggerAnnotationsVersion = "1.5.22"
