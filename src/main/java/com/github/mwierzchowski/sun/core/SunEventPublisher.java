@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Clock;
 import java.time.LocalDate;
 
+import static java.lang.Boolean.FALSE;
 import static java.time.Duration.ofSeconds;
 import static java.util.UUID.randomUUID;
 
@@ -61,8 +62,9 @@ public class SunEventPublisher {
 
         @Override
         public void run() {
-            var duration = env.getRequiredProperty("sun-ephemeris.publish.lock-duration", Long.class);
-            if (!redis.opsForValue().setIfAbsent(LOCK_NAME, randomUUID(), ofSeconds(duration))) {
+            var lockDuration = env.getRequiredProperty("sun-ephemeris.publish.lock-duration", Long.class);
+            var lockFlag = redis.opsForValue().setIfAbsent(LOCK_NAME, randomUUID(), ofSeconds(lockDuration));
+            if (FALSE.equals(lockFlag)) {
                 LOG.debug("Dropping event {} (not a leader)", event.getType());
                 return;
             }
