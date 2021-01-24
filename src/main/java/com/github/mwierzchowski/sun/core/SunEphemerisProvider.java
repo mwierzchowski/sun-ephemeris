@@ -27,7 +27,7 @@ public class SunEphemerisProvider {
     private final Environment env;
 
     @Retry(name = "SunEphemerisProvider")
-    @Cacheable(cacheNames = {CACHE_NAME})
+    @Cacheable(cacheNames = {CACHE_NAME}, key = "#date.toString()")
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
         var latitude = env.getRequiredProperty("sun-ephemeris.location.latitude", Double.class);
