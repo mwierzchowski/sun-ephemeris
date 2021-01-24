@@ -28,8 +28,8 @@ public class SunEventPublisher {
     private final RedisTemplate<String, Object> redis;
     private final Environment env;
 
-    @Retry(name = "SunEventPublisher", fallbackMethod = "planEventsFallback")
     @Scheduled(cron = "${sun-ephemeris.publish.cron}")
+    @Retry(name = "SunEventPublisher", fallbackMethod = "planEventsFallback")
     public void planEvents() {
         LOG.info("Planning today events");
         var today = LocalDate.now(clock);
