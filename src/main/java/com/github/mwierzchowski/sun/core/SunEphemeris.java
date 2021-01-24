@@ -21,7 +21,8 @@ public class SunEphemeris implements Serializable {
     }
 
     public SunEvent firstEvent() {
-        return stream().findFirst().get();
+        return stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("SunEphemeris does not have any events"));
     }
 
     public Optional<SunEvent> firstEventAfter(Instant start) {
