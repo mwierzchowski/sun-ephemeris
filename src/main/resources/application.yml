@@ -52,6 +52,5 @@ sun-ephemeris:
   location:
     latitude: 52.23
     longitude: 21.01
-  publish:
-    cron: '0 0 0 * * *'
-    lock-duration: 360
+  schedule-cron: '0 0 0 * * *'
+  publish-lock-duration: 3m

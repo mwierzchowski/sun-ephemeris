@@ -1,6 +1,6 @@
 package com.github.mwierzchowski.sun;
 
-import com.github.mwierzchowski.sun.core.SunEventPublisher;
+import com.github.mwierzchowski.sun.core.SunEventPublishScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,7 +30,7 @@ public class SunApplication {
 	ApplicationListener<ApplicationReadyEvent> initializer() {
 		return event -> {
 			LOG.info("Initializing on startup");
-			event.getApplicationContext().getBean(SunEventPublisher.class).planEvents();
+			event.getApplicationContext().getBean(SunEventPublishScheduler.class).scheduleEvents();
 		};
 	}
 
