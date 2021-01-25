@@ -32,6 +32,7 @@ dependencyManagement {
 ext {
 	springBootAdminVersion = "2.3.1"
 	springDocVersion = "1.5.0"
+	shedlockVersion = "4.15.1"
 	swaggerAnnotationsVersion = "1.5.22"
 	findbugsJsr305Version = "3.0.2"
 	resilience4jVersion = "1.6.1"
@@ -39,14 +40,10 @@ ext {
 }
 
 dependencies {
-	// Management
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	implementation "de.codecentric:spring-boot-admin-starter-client:$springBootAdminVersion"
-
-	// Web
+	// Web Application
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.springdoc:springdoc-openapi-webmvc-core:$springDocVersion"
+	implementation "javax.inject:javax.inject:1"
 
 	// Redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
@@ -60,9 +57,18 @@ dependencies {
 	implementation "com.google.code.findbugs:jsr305:$findbugsJsr305Version"
 	testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
 
+	// Scheduler lock
+	implementation "net.javacrumbs.shedlock:shedlock-spring:$shedlockVersion"
+	implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:$shedlockVersion"
+
 	// Lombok
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
+
+	// Management
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation "de.codecentric:spring-boot-admin-starter-client:$springBootAdminVersion"
 
 	// General testing
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

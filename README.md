@@ -18,6 +18,7 @@ Project is composed of the following tools:
 - [Spring MVC](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html)
 - [Spring Data Redis](https://spring.io/projects/spring-data-redis)
 - [Lombok](https://projectlombok.org)
+- [ShedLock](https://github.com/lukas-krecan/ShedLock)
 - [Resilience4J](https://github.com/resilience4j/resilience4j)
 - [Redis](https://redislabs.com)
 - [Springdoc-OpenAPI](https://springdoc.org)
