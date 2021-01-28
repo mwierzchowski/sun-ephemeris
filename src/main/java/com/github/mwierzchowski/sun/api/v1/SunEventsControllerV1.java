@@ -30,7 +30,7 @@ public class SunEventsControllerV1 {
     private final SunEphemerisProvider provider;
     private final Clock clock;
 
-    @GetMapping(path = "/")
+    @GetMapping
     @Operation(summary = "All sun events on a date")
     @ApiResponse(responseCode = "200", description = "List of sun events")
     public List<SunEvent> getEvents(
