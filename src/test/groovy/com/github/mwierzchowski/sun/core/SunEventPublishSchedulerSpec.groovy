@@ -1,11 +1,10 @@
 package com.github.mwierzchowski.sun.core
 
-import com.github.mwierzchowski.sun.Integration
-import org.spockframework.spring.SpringBean
-import org.springframework.beans.factory.annotation.Autowired
+
 import org.springframework.scheduling.TaskScheduler
 import spock.lang.Specification
 
+import javax.inject.Provider
 import java.time.Clock
 import java.time.LocalDate
 
@@ -15,22 +14,14 @@ import static java.time.LocalDateTime.of
 import static java.time.ZoneId.systemDefault
 import static java.time.ZoneOffset.UTC
 
-@Integration(properties = [
-        "resilience4j.retry.instances.SunEventPublisher.waitDuration=1s",
-        "resilience4j.retry.instances.SunEventPublisher.maxRetryAttempts=2"
-])
 class SunEventPublishSchedulerSpec extends Specification {
-    @Autowired
-    SunEventPublishScheduler publishScheduler
-
-    @SpringBean
     SunEphemerisProvider ephemerisProvider = Mock()
-
-    @SpringBean
+    Provider<SunEventPublishTask> publisherProvider = Mock() {
+        get() >> new SunEventPublishTask(null)
+    }
     TaskScheduler taskScheduler = Mock()
-
-    @SpringBean
     Clock clock = fixed(of(2021, 1, 27, 11, 59).toInstant(UTC), systemDefault())
+    SunEventPublishScheduler publishScheduler = new SunEventPublishScheduler(ephemerisProvider, publisherProvider, taskScheduler, clock)
 
     def "Should plan remaining events for today"() {
         given:
@@ -42,37 +33,15 @@ class SunEventPublishSchedulerSpec extends Specification {
         3 * taskScheduler.schedule(_, _)
     }
 
-    def "Should retry planning when provider fails"() {
+    def "Should fallback to yesterday events in case of issues"() {
         given:
-        def today = LocalDate.now(clock)
-        ephemerisProvider.sunEphemerisFor(today) >>> [null, sunEphemeris(today)]
-        when:
-        publishScheduler.scheduleEvents()
-        then:
-        3 * taskScheduler.schedule(_, _)
-    }
-
-    def "Should plan yesterday events when provider fails providing today ephemeris"() {
-        given:
-        def today = LocalDate.now(clock)
-        def yesterday = today.minusDays(1)
-        ephemerisProvider.sunEphemerisFor(today) >> null
+        def exception = new RuntimeException("testing fallback")
+        def yesterday = LocalDate.now(clock).minusDays(1)
         ephemerisProvider.sunEphemerisFor(yesterday) >> sunEphemeris(yesterday, -2)
         when:
-        publishScheduler.scheduleEvents()
+        publishScheduler.scheduleEventsFallback(exception)
         then:
         2 * taskScheduler.schedule(_, _)
-    }
-
-    def "Should throw exception when provider fails providing both today and yesterday ephemeris"() {
-        given:
-        def today = LocalDate.now(clock)
-        ephemerisProvider.sunEphemerisFor(today) >> null
-        ephemerisProvider.sunEphemerisFor(today.minusDays(1)) >> [null]
-        when:
-        publishScheduler.scheduleEvents()
-        then:
-        thrown RuntimeException
     }
 
     def sunEphemeris(LocalDate day, long diff = 0) {
