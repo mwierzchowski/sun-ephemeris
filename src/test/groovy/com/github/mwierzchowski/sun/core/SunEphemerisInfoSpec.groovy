@@ -7,18 +7,18 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.OffsetDateTime
 
-import static com.github.mwierzchowski.sun.core.SunEphemerisInfoContributor.DATE_KEY
-import static com.github.mwierzchowski.sun.core.SunEphemerisInfoContributor.ROOT_KEY
-import static com.github.mwierzchowski.sun.core.SunEphemerisInfoContributor.keyOf
+import static SunEphemerisInfo.DATE_KEY
+import static SunEphemerisInfo.ROOT_KEY
+import static SunEphemerisInfo.keyOf
 import static com.github.mwierzchowski.sun.core.SunEventType.*
 import static java.time.ZoneId.systemDefault
 import static java.time.ZoneOffset.UTC
 
-class SunEphemerisInfoContributorSpec extends Specification {
+class SunEphemerisInfoSpec extends Specification {
     def today = LocalDate.of(2021, 1, 31)
     def clock = Clock.fixed(today.atTime(0, 0).toInstant(UTC), systemDefault())
     def provider = Mock(SunEphemerisProvider)
-    def infoContributor = new SunEphemerisInfoContributor(provider, clock)
+    def info = new SunEphemerisInfo(provider, clock)
 
     def "Should build ephemeris info"() {
         given:
@@ -31,7 +31,7 @@ class SunEphemerisInfoContributorSpec extends Specification {
         }
         def builder = new Info.Builder()
         when:
-        infoContributor.contribute(builder)
+        info.contribute(builder)
         def details = builder.build().getDetails().get(ROOT_KEY) as Map<String, Object>
         then:
         details.get(DATE_KEY) != null

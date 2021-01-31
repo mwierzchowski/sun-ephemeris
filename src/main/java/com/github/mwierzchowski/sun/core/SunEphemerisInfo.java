@@ -12,7 +12,7 @@ import static java.time.LocalDate.now;
 
 @Component
 @RequiredArgsConstructor
-public class SunEphemerisInfoContributor implements InfoContributor {
+public class SunEphemerisInfo implements InfoContributor {
     public static final String ROOT_KEY = "ephemeris";
     public static final String DATE_KEY = "date";
 
