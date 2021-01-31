@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationListener
 import spock.lang.Specification
 
 @Integration(properties = ["sun-ephemeris.init-on-startup=true"])
-class ApplicationSpec extends Specification {
+class SunApplicationSpec extends Specification {
     @Autowired
     ApplicationContext context
 
