@@ -1,5 +1,7 @@
-package com.github.mwierzchowski.sun.core;
+package com.github.mwierzchowski.sun.management;
 
+import com.github.mwierzchowski.sun.core.SunEphemerisProvider;
+import com.github.mwierzchowski.sun.core.SunEventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;

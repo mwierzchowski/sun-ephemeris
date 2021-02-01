@@ -1,5 +1,7 @@
-package com.github.mwierzchowski.sun.core
+package com.github.mwierzchowski.sun.management
 
+import com.github.mwierzchowski.sun.core.SunEphemeris
+import com.github.mwierzchowski.sun.core.SunEphemerisProvider
 import org.springframework.boot.actuate.info.Info
 import spock.lang.Specification
 
@@ -7,10 +9,8 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.OffsetDateTime
 
-import static SunEphemerisInfo.DATE_KEY
-import static SunEphemerisInfo.ROOT_KEY
-import static SunEphemerisInfo.keyOf
 import static com.github.mwierzchowski.sun.core.SunEventType.*
+import static com.github.mwierzchowski.sun.management.SunEphemerisInfo.*
 import static java.time.ZoneId.systemDefault
 import static java.time.ZoneOffset.UTC
 
