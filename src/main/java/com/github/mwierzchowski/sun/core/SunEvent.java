@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static java.time.Instant.now;
 
@@ -24,5 +25,9 @@ public class SunEvent implements Serializable {
 
     public LocalDateTime getLocalDateTime(Clock clock) {
         return timestamp.atZone(clock.getZone()).toLocalDateTime();
+    }
+
+    public LocalTime getLocalTime(Clock clock) {
+        return getLocalDateTime(clock).toLocalTime();
     }
 }

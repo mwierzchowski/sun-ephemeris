@@ -32,4 +32,11 @@ class SunEventSpec extends Specification {
         expect:
         event.getLocalDateTime(clock) != null
     }
+
+    def "Should provide local time"() {
+        given:
+        event.setTimestamp(nowTimestamp)
+        expect:
+        event.getLocalTime(clock) != null
+    }
 }
