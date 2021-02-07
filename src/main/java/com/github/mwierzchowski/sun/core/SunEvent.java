@@ -27,6 +27,6 @@ public class SunEvent implements Serializable {
     }
 
     public String getName() {
-        return type.toString().toLowerCase();
+        return type.description();
     }
 }

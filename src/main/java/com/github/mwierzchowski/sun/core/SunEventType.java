@@ -5,5 +5,9 @@ public enum SunEventType {
     SUNRISE,
     NOON,
     SUNSET,
-    DUSK
+    DUSK;
+
+    public String description() {
+        return toString().toLowerCase();
+    }
 }
