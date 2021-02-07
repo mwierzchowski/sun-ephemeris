@@ -7,6 +7,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.Clock;
+import java.time.format.DateTimeFormatter;
+
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 @EnableAsync
 @EnableCaching
@@ -16,5 +19,10 @@ public class CommonConfig {
     @Bean
     Clock systemClock() {
         return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    DateTimeFormatter timestampFormatter(Clock clock) {
+        return ofPattern("yyyy-MM-dd HH:mm:ss").withZone(clock.getZone());
     }
 }
