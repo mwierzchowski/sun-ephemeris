@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toMap;
 @RequiredArgsConstructor
 public class SunEphemerisInfo implements InfoContributor {
     public static final String ROOT_KEY = "todayEphemeris";
-    public static final String NOT_AVAILABLE = "N/A";
+    public static final String NOT_AVAILABLE = "n/a";
 
     private final Clock clock;
     private SunEphemeris ephemeris;

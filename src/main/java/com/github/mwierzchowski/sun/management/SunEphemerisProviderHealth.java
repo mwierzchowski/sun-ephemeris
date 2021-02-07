@@ -29,7 +29,7 @@ public class SunEphemerisProviderHealth implements HealthIndicator {
     public static final String LAST_FAILURE_MSG_KEY = "lastFailureMsg";
     public static final String SUCCESS_COUNT_KEY = "successCount";
     public static final String FAILURE_COUNT_KEY = "failureCount";
-    public static final String NOT_AVAILABLE = "N/A";
+    public static final String NOT_AVAILABLE = "n/a";
 
     private final DateTimeFormatter formatter;
 
