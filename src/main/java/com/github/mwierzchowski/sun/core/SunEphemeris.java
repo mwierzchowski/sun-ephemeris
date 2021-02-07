@@ -3,12 +3,16 @@ package com.github.mwierzchowski.sun.core;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Stream;
+
+import static com.github.mwierzchowski.sun.core.SunEventType.NOON;
 
 @EqualsAndHashCode
 public class SunEphemeris implements Serializable {
@@ -30,5 +34,13 @@ public class SunEphemeris implements Serializable {
 
     public Optional<SunEvent> firstEventAfter(Instant start) {
         return stream().filter(event -> event.getTimestamp().isAfter(start)).findFirst();
+    }
+
+    public boolean isToday(Clock clock) {
+        var today = LocalDate.now(clock);
+        return events.get(NOON)
+                .atZone(clock.getZone())
+                .toLocalDate()
+                .equals(today);
     }
 }

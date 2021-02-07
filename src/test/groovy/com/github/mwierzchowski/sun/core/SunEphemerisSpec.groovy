@@ -2,12 +2,15 @@ package com.github.mwierzchowski.sun.core
 
 import spock.lang.Specification
 
+import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.util.stream.Collectors
 
 import static com.github.mwierzchowski.sun.core.SunEventType.*
+import static java.time.ZoneId.systemDefault
 import static java.time.ZoneOffset.UTC
 
 class SunEphemerisSpec extends Specification {
@@ -81,5 +84,21 @@ class SunEphemerisSpec extends Specification {
         def optionalFirstEvent = ephemeris.firstEventAfter(sunsetTime.plusSeconds(1).toInstant())
         then:
         !optionalFirstEvent.isPresent()
+    }
+
+    def "Should be marked as today when noon is today"() {
+        given:
+        ephemeris.add(NOON, noonTime)
+        def testClock = Clock.fixed(noonTime.toInstant(), systemDefault())
+        expect:
+        ephemeris.isToday(testClock)
+    }
+
+    def "Should be marked as not today when noon is not today"() {
+        given:
+        ephemeris.add(NOON, noonTime)
+        def testClock = Clock.fixed(noonTime.minusDays(1).toInstant(), systemDefault())
+        expect:
+        !ephemeris.isToday(testClock)
     }
 }
