@@ -2,8 +2,10 @@ package com.github.mwierzchowski.sun.core
 
 import com.github.mwierzchowski.sun.Integration
 import com.github.tomakehurst.wiremock.matching.UrlPattern
+import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
+import org.springframework.context.ApplicationListener
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -21,6 +23,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 class SunEphemerisProviderSpec extends Specification {
     @Autowired
     SunEphemerisProvider provider
+
+    @SpringBean(name = "providerEventsListener")
+    ApplicationListener listener = Mock()
 
     @Autowired
     CacheManager cacheManager
@@ -47,6 +52,7 @@ class SunEphemerisProviderSpec extends Specification {
         ephemeris.firstEvent() != null
         ephemeris.stream().count() == SunEventType.values().size()
         verify(1, getRequestedFor(apiUrl))
+        1 * listener.onApplicationEvent(_ as SunEphemerisProvider.SuccessEvent)
     }
 
     def "Should cache today ephemeris"() {
@@ -63,6 +69,7 @@ class SunEphemerisProviderSpec extends Specification {
         ephemeris2 != null
         ephemeris1 == ephemeris2
         verify(1, getRequestedFor(apiUrl))
+        1 * listener.onApplicationEvent(_ as SunEphemerisProvider.SuccessEvent)
     }
 
     def "Should request ephemeris for a new date"() {
@@ -76,6 +83,7 @@ class SunEphemerisProviderSpec extends Specification {
         def ephemeris2 = provider.sunEphemerisFor(today.plusDays(1))
         then:
         verify(2, getRequestedFor(apiUrl))
+        2 * listener.onApplicationEvent(_ as SunEphemerisProvider.SuccessEvent)
     }
 
     def "Should retry request when it fails"() {
@@ -95,6 +103,7 @@ class SunEphemerisProviderSpec extends Specification {
         then:
         ephemeris != null
         verify(2, getRequestedFor(apiUrl))
+        1 * listener.onApplicationEvent(_ as SunEphemerisProvider.SuccessEvent)
     }
 
     def "Should throw exception when sunrise-sunset service is down"() {
@@ -109,6 +118,7 @@ class SunEphemerisProviderSpec extends Specification {
         def ex = thrown(RuntimeException)
         ex.getMessage().contains(errorMessage)
         verify(2, getRequestedFor(apiUrl))
+        2 * listener.onApplicationEvent(_ as SunEphemerisProvider.FailureEvent)
     }
 
     def "Should throw exception when sunrise-sunset service returns empty response"() {
@@ -121,5 +131,6 @@ class SunEphemerisProviderSpec extends Specification {
         provider.sunEphemerisFor(today)
         then:
         thrown RuntimeException
+        2 * listener.onApplicationEvent(_ as SunEphemerisProvider.FailureEvent)
     }
 }

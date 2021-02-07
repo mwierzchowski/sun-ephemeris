@@ -1,13 +1,11 @@
 package com.github.mwierzchowski.sun.core;
 
 import io.github.resilience4j.retry.annotation.Retry;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.sunrisesunset.api.SunriseSunsetApi;
@@ -29,7 +27,7 @@ public class SunEphemerisProvider {
     public static final String CACHE_NAME = "sun-ephemeris.provider";
 
     private final SunriseSunsetApi api;
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher publisher;
 
     @Value("${sun-ephemeris.location.latitude}")
     private Double latitude;
@@ -41,18 +39,13 @@ public class SunEphemerisProvider {
     @Cacheable(cacheNames = {CACHE_NAME}, key = "#date.toString()")
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
-        var response = apiResponseFor(date);
-        LOG.debug("Sunrise-Sunset response: {}", response);
-        return sunEphemerisFrom(response.getResults());
-    }
-
-    private SunriseSunsetResponse apiResponseFor(LocalDate ephemerisDate) {
         try {
-            var result = api.sunriseSunset(latitude, longitude, ephemerisDate.toString(), 0);
-            eventPublisher.publishEvent(Status.builder().date(ephemerisDate).build());
-            return result;
+            var response = api.sunriseSunset(latitude, longitude, date.toString(), 0);
+            publisher.publishEvent(new SuccessEvent(response));
+            LOG.debug("Sunrise-Sunset response: {}", response);
+            return sunEphemerisFrom(response.getResults());
         } catch (Exception ex) {
-            eventPublisher.publishEvent(Status.builder().date(ephemerisDate).exception(ex).build());
+            publisher.publishEvent(new FailureEvent(ex));
             throw ex;
         }
     }
@@ -67,14 +60,15 @@ public class SunEphemerisProvider {
         return sunEphemeris;
     }
 
-    @Getter
-    @Builder
-    public static class Status {
-        private LocalDate date;
-        private Exception exception;
+    public static class SuccessEvent extends ApplicationEvent {
+        public SuccessEvent(SunriseSunsetResponse response) {
+            super(response);
+        }
+    }
 
-        public boolean isSuccess() {
-            return exception == null;
+    public static class FailureEvent extends ApplicationEvent {
+        public FailureEvent(Exception exception) {
+            super(exception);
         }
     }
 }
