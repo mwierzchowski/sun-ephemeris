@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static java.time.Instant.now;
@@ -23,11 +22,11 @@ public class SunEvent implements Serializable {
         return timestamp.isBefore(now(clock));
     }
 
-    public LocalDateTime getLocalDateTime(Clock clock) {
-        return timestamp.atZone(clock.getZone()).toLocalDateTime();
+    public LocalTime getLocalTime(Clock clock) {
+        return timestamp.atZone(clock.getZone()).toLocalTime();
     }
 
-    public LocalTime getLocalTime(Clock clock) {
-        return getLocalDateTime(clock).toLocalTime();
+    public String getName() {
+        return type.toString().toLowerCase();
     }
 }
