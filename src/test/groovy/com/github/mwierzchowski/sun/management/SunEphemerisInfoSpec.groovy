@@ -20,7 +20,7 @@ class SunEphemerisInfoSpec extends Specification {
     def clock = Clock.fixed(today.atTime(0, 0).toInstant(UTC), systemDefault())
     def info = new SunEphemerisInfo(clock)
 
-    def "Should provide ephemeris info after success update"() {
+    def "Should provide ephemeris info after success"() {
         given:
         info.onSuccess(new SunEventPublishScheduler.SuccessEvent(ephemeris()))
         def builder = new Info.Builder()
