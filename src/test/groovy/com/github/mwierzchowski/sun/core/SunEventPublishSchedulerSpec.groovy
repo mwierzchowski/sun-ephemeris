@@ -1,6 +1,6 @@
 package com.github.mwierzchowski.sun.core
 
-
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.scheduling.TaskScheduler
 import spock.lang.Specification
 
@@ -16,12 +16,13 @@ import static java.time.ZoneOffset.UTC
 
 class SunEventPublishSchedulerSpec extends Specification {
     SunEphemerisProvider ephemerisProvider = Mock()
-    Provider<SunEventPublishTask> publisherProvider = Mock() {
+    Provider<SunEventPublishTask> taskProvider = Mock() {
         get() >> new SunEventPublishTask(null)
     }
     TaskScheduler taskScheduler = Mock()
+    ApplicationEventPublisher statusPublisher = Mock()
     Clock clock = fixed(of(2021, 1, 27, 11, 59).toInstant(UTC), systemDefault())
-    SunEventPublishScheduler publishScheduler = new SunEventPublishScheduler(ephemerisProvider, publisherProvider, taskScheduler, clock)
+    SunEventPublishScheduler publishScheduler = new SunEventPublishScheduler(ephemerisProvider, taskProvider, taskScheduler, statusPublisher, clock)
 
     def "Should plan remaining events for today"() {
         given:
@@ -31,6 +32,7 @@ class SunEventPublishSchedulerSpec extends Specification {
         publishScheduler.scheduleEvents()
         then:
         3 * taskScheduler.schedule(_, _)
+        1 * statusPublisher.publishEvent(_ as SunEventPublishScheduler.SuccessEvent)
     }
 
     def "Should fallback to yesterday events in case of issues"() {
@@ -42,6 +44,7 @@ class SunEventPublishSchedulerSpec extends Specification {
         publishScheduler.scheduleEventsFallback(exception)
         then:
         2 * taskScheduler.schedule(_, _)
+        1 * statusPublisher.publishEvent(_ as SunEventPublishScheduler.FailureEvent)
     }
 
     def sunEphemeris(LocalDate day, long diff = 0) {
