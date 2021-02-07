@@ -36,7 +36,7 @@ ext {
 	swaggerAnnotationsVersion = "1.5.22"
 	findbugsJsr305Version = "3.0.2"
 	resilience4jVersion = "1.6.1"
-	playtikaVersion = "1.86"
+	playtikaVersion = "2.0.3"
 }
 
 dependencies {
