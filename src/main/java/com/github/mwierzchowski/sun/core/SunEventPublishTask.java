@@ -15,8 +15,8 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
 public class SunEventPublishTask implements Runnable {
-    public static final String QUEUE_NAME = "sun-ephemeris.events";
-    public static final String LOCK_NAME = "sun-ephemeris.publish-lock";
+    public static final String QUEUE_NAME = "sun-ephemeris:events";
+    public static final String LOCK_NAME = "sun-ephemeris:publish";
 
     private final RedisTemplate<String, Object> redis;
 
