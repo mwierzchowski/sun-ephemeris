@@ -94,7 +94,7 @@ jacocoTestReport {
 
 task sunriseSunsetGenerate(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
 	def sourcesRoot = "$buildDir/generated/sources/sunrise-sunset"
-	inputSpec = "$rootDir/specs/sunrise-sunset-spec.yml"
+	inputSpec = "$rootDir/etc/sunrise-sunset-spec.yml"
 	outputDir = sourcesRoot
 	generatorName = "java"
 	library = "resttemplate"
@@ -110,6 +110,7 @@ task sunriseSunsetGenerate(type: org.openapitools.generator.gradle.plugin.tasks.
 
 dockerCompose {
 	projectName = project.name
+	dockerComposeWorkingDirectory = "$rootDir/etc"
 }
 
 bootRun {
