@@ -36,7 +36,7 @@ loop for each Event
     activate Redis
     PublishTask <-- Redis : lock
     deactivate Redis
-    PublishTask -> Redis : send to queue
+    PublishTask -> Redis : enqueue
     TaskScheduler <-- PublishTask
     deactivate PublishTask
 end
