@@ -11,11 +11,11 @@ activate PublishScheduler
         deactivate Redis
         boundary SunriseAPI
         Provider ->x SunriseAPI : HTTP
-        note right: Failed request retries...
+        note right : Failed request retries...
         Provider ->x SunriseAPI : HTTP
         Provider ->x SunriseAPI : HTTP
         PublishScheduler <-- Provider : error
-        note right: Retry limit has been reached
+        note right : Retry limit has been reached
     deactivate Provider
 
     PublishScheduler -> Provider : sunEphemerisFor(yesterday)
@@ -27,7 +27,7 @@ activate PublishScheduler
         PublishScheduler <-- Provider : Ephemeris
     deactivate Provider
 
-    note right of PublishScheduler: PublishTask setup same as on a happy path
+    note right of PublishScheduler : PublishTask setup same as on a happy path
 
     Cron <-- PublishScheduler
 deactivate PublishScheduler
