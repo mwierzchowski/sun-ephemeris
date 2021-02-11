@@ -2,29 +2,29 @@
 
 Cron -> PublishScheduler : scheduleEvents
 activate PublishScheduler
-PublishScheduler -> Provider : sunEphemerisFor(date)
-activate Provider
-database Redis
-Provider -> Redis : get(date)
-activate Redis
-Provider <-- Redis : null
-deactivate Redis
-boundary SunriseAPI
-Provider -> SunriseAPI : HTTP
-activate SunriseAPI
-Provider <-- SunriseAPI : JSON
-deactivate SunriseAPI
-Provider -> Redis : set
-PublishScheduler <-- Provider : Ephemeris
-deactivate Provider
+    PublishScheduler -> Provider : sunEphemerisFor(date)
+    activate Provider
+        database Redis
+        Provider -> Redis : get(date)
+        activate Redis
+            Provider <-- Redis : null
+        deactivate Redis
+        boundary SunriseAPI
+        Provider -> SunriseAPI : HTTP
+        activate SunriseAPI
+            Provider <-- SunriseAPI : JSON
+        deactivate SunriseAPI
+        Provider -> Redis : set
+        PublishScheduler <-- Provider : Ephemeris
+    deactivate Provider
 
-loop for each Event
-    create PublishTask
-    PublishScheduler -> PublishTask : new
-    PublishScheduler -> TaskScheduler : schedule(task)
-end
+    loop for each Event
+        create PublishTask
+        PublishScheduler -> PublishTask : new
+        PublishScheduler -> TaskScheduler : schedule(task)
+    end
 
-Cron <-- PublishScheduler
+    Cron <-- PublishScheduler
 deactivate PublishScheduler
 
 ... Later, same day ...
@@ -32,12 +32,12 @@ deactivate PublishScheduler
 loop for each Event
     TaskScheduler -> PublishTask : run
     activate PublishTask
-    PublishTask -> Redis : acquire lock
-    activate Redis
-    PublishTask <-- Redis : lock
-    deactivate Redis
-    PublishTask -> Redis : enqueue
-    TaskScheduler <-- PublishTask
+        PublishTask -> Redis : acquire lock
+        activate Redis
+            PublishTask <-- Redis : lock
+        deactivate Redis
+        PublishTask -> Redis : enqueue
+        TaskScheduler <-- PublishTask
     deactivate PublishTask
 end
 

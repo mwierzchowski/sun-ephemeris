@@ -2,34 +2,34 @@
 
 Cron -> PublishScheduler : scheduleEvents
 activate PublishScheduler
-PublishScheduler -> Provider : sunEphemerisFor(today)
-activate Provider
-database Redis
-Provider -> Redis : get(date)
-activate Redis
-Provider <-- Redis : null
-deactivate Redis
-boundary SunriseAPI
-Provider ->x SunriseAPI : HTTP
-note right: Failed request retries...
-Provider ->x SunriseAPI : HTTP
-Provider ->x SunriseAPI : HTTP
-PublishScheduler <-- Provider : error
-note right: Retry limit has been reached
-deactivate Provider
+    PublishScheduler -> Provider : sunEphemerisFor(today)
+    activate Provider
+        database Redis
+        Provider -> Redis : get(date)
+        activate Redis
+            Provider <-- Redis : null
+        deactivate Redis
+        boundary SunriseAPI
+        Provider ->x SunriseAPI : HTTP
+        note right: Failed request retries...
+        Provider ->x SunriseAPI : HTTP
+        Provider ->x SunriseAPI : HTTP
+        PublishScheduler <-- Provider : error
+        note right: Retry limit has been reached
+    deactivate Provider
 
-PublishScheduler -> Provider : sunEphemerisFor(yesterday)
-activate Provider
-Provider -> Redis : get(date - 1)
-activate Redis
-Provider <-- Redis : Ephemeris
-deactivate Redis
-PublishScheduler <-- Provider : Ephemeris
-deactivate Provider
+    PublishScheduler -> Provider : sunEphemerisFor(yesterday)
+    activate Provider
+        Provider -> Redis : get(date - 1)
+        activate Redis
+            Provider <-- Redis : Ephemeris
+        deactivate Redis
+        PublishScheduler <-- Provider : Ephemeris
+    deactivate Provider
 
-note right of PublishScheduler: PublishTask setup same as on a happy path
+    note right of PublishScheduler: PublishTask setup same as on a happy path
 
-Cron <-- PublishScheduler
+    Cron <-- PublishScheduler
 deactivate PublishScheduler
 
 @enduml
