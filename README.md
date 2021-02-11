@@ -69,13 +69,13 @@ or Notepad instead :)
 Optionally, consider installing IDE plugins that improve development experience. Recommended plugins should have
 versions available for most popular IDEs (IntelliJ links below):
 
-Plugin                                                                    | Comment
---------------------------------------------------------------------------|----------------------------------------------------------------------
-[Lombok](https://plugins.jetbrains.com/plugin/6317-lombok)                | Support for Lombok generated code
-[MapStruct](https://plugins.jetbrains.com/plugin/10036-mapstruct-support) | Support for MapStruct generated code
-[SonarLint](https://plugins.jetbrains.com/plugin/7973-sonarlint)          | Quality feedback on the fly 
-[Docker](https://plugins.jetbrains.com/plugin/7724-docker)                | Support for docker-compose (handy when starting application locally)
-[PlantUML](https://plugins.jetbrains.com/plugin/7017-plantuml-integration)| Helps writing UML diagrams with PlantUML
+Plugin                                                                     | Comment
+---------------------------------------------------------------------------|----------------------------------------------------------------------
+[Lombok](https://plugins.jetbrains.com/plugin/6317-lombok)                 | Support for Lombok generated code
+[MapStruct](https://plugins.jetbrains.com/plugin/10036-mapstruct-support)  | Support for MapStruct generated code
+[SonarLint](https://plugins.jetbrains.com/plugin/7973-sonarlint)           | Quality feedback on the fly 
+[Docker](https://plugins.jetbrains.com/plugin/7724-docker)                 | Support for docker-compose (handy when starting application locally)
+[PlantUML](https://plugins.jetbrains.com/plugin/7017-plantuml-integration) | Helps writing UML diagrams with PlantUML
 
 **Please note:** Without some of these plugins, IDEs may highlight references to generated code (e.g. Lombok properties
 or MapStruct mappers) as errors. It is annoying but do not affect building or running application.
