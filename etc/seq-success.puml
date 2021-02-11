@@ -6,15 +6,18 @@ activate PublishScheduler
     activate Provider
         database Redis
         Provider -> Redis : get(date)
+        note right : Annotation declarative cache
         activate Redis
             Provider <-- Redis : null
         deactivate Redis
         boundary SunriseAPI
         Provider -> SunriseAPI : HTTP
+        note right : OpenAPI generated client
         activate SunriseAPI
             Provider <-- SunriseAPI : JSON
         deactivate SunriseAPI
         Provider -> Redis : set
+        note right : Annotation declarative cache
         PublishScheduler <-- Provider : Ephemeris
     deactivate Provider
 
@@ -33,6 +36,7 @@ loop for each Event
     TaskScheduler -> PublishTask : run
     activate PublishTask
         PublishTask -> Redis : acquire lock
+        note left : Annotation declarative lock
         activate Redis
             PublishTask <-- Redis : lock
         deactivate Redis
