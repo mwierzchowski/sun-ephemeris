@@ -17,7 +17,7 @@ Microservice that provides sun ephemeris as a stream of events and over REST API
 > TODO - describe configuration (e.g. localization, profile). Consider moving default localization to bootRun .
 
 ### Bill of materials
-Project is composed of the following tools:
+Project's toolchain:
 - [Gradle](https://gradle.org)
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html)
