@@ -18,6 +18,7 @@ activate PublishScheduler
         note right : Retry limit has been reached
     deactivate Provider
 
+    note right of PublishScheduler : Annotation declarative fallback
     PublishScheduler -> Provider : sunEphemerisFor(yesterday)
     activate Provider
         Provider -> Redis : get(date - 1)
