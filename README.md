@@ -112,9 +112,9 @@ Once started, following services are available:
 
 Service                                                               | URL                         | Credentials
 ----------------------------------------------------------------------|-----------------------------|----------------------------
-[Redis](https://redislabs.com)                                        | http://localhost:6379       | NA 
 [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin) | http://localhost:82         | `admin` / `admin`
 [Swagger UI](https://swagger.io/tools/swagger-ui/)                    | http://localhost:83/swagger | NA 
+[Redis](https://redislabs.com)                                        | http://localhost:6379       | NA 
 
 ### Application
 
