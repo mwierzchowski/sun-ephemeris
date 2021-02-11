@@ -4,14 +4,18 @@ Cron -> PublishScheduler : scheduleEvents
 activate PublishScheduler
 PublishScheduler -> Provider : sunEphemerisFor(today)
 activate Provider
+database Redis
 Provider -> Redis : get(date)
 activate Redis
 Provider <-- Redis : null
 deactivate Redis
+boundary SunriseAPI
 Provider ->x SunriseAPI : HTTP
+note right: Provider retries failed request...
 Provider ->x SunriseAPI : HTTP
 Provider ->x SunriseAPI : HTTP
 PublishScheduler <-- Provider : error
+note right: Retry limit has been reached
 deactivate Provider
 
 PublishScheduler -> Provider : sunEphemerisFor(yesterday)
@@ -23,11 +27,7 @@ deactivate Redis
 PublishScheduler <-- Provider : Ephemeris
 deactivate Provider
 
-loop for each Event
-    create PublishTask
-    PublishScheduler -> PublishTask : new
-    PublishScheduler -> TaskScheduler : schedule(task)
-end
+note right of PublishScheduler: PublishTask setup same as on a happy path
 
 Cron <-- PublishScheduler
 deactivate PublishScheduler
