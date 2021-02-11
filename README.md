@@ -8,6 +8,14 @@ Sun Ephemeris
 
 Microservice that provides sun ephemeris as a stream of events and over REST API.
 
+> TODO - more description
+
+![Success Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/mwierzchowski/sun-ephemeris/master/etc/seq-success.puml)
+
+![Alternate Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/mwierzchowski/sun-ephemeris/master/etc/seq-alternate.puml)
+
+> TODO - describe configuration (e.g. localization, profile). Consider moving default localization to bootRun .
+
 ### Bill of materials
 Project is composed of the following tools:
 - [Gradle](https://gradle.org)
