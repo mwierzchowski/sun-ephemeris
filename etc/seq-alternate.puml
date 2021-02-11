@@ -11,8 +11,8 @@ activate PublishScheduler
         deactivate Redis
         boundary SunriseAPI
         Provider ->x SunriseAPI : HTTP
-        note right : Failed request retries...
         Provider ->x SunriseAPI : HTTP
+        note right : Failed request retries...
         Provider ->x SunriseAPI : HTTP
         PublishScheduler <-- Provider : error
         note right : Retry limit has been reached
