@@ -10,7 +10,7 @@ import org.sunrisesunset.invoker.ApiClient;
 @Configuration
 public class SunriseSunsetConfig {
     @Bean
-    ApiClient sunriseSunsetApiClient(@Value("${sunrise-sunset.path}") String path) {
+    ApiClient sunriseSunsetApiClient(@Value("${provider.path}") String path) {
         return new ApiClient(new RestTemplate())
                 .setBasePath(path);
     }

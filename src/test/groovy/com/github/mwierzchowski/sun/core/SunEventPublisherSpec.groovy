@@ -3,32 +3,35 @@ package com.github.mwierzchowski.sun.core
 import com.github.mwierzchowski.sun.Integration
 import org.spockframework.spring.SpringSpy
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
 import spock.lang.Specification
 
 import javax.inject.Provider
 
-import static com.github.mwierzchowski.sun.core.SunEventPublishTask.LOCK_NAME
-import static com.github.mwierzchowski.sun.core.SunEventPublishTask.QUEUE_NAME
+import static com.github.mwierzchowski.sun.core.SunEventPublisher.LOCK
 import static com.github.mwierzchowski.sun.core.SunEventType.NOON
 import static java.time.Instant.now
 
-@Integration(properties = ["publish-lock-duration=1s"])
-class SunEventPublishTaskSpec extends Specification {
+@Integration(properties = ["publisher.lock-duration=1s"])
+class SunEventPublisherSpec extends Specification {
     @Autowired
-    Provider<SunEventPublishTask> taskProvider
+    Provider<SunEventPublisher> taskProvider
 
     @SpringSpy
     RedisTemplate<String, Object> redis
 
+    @Value('${publisher.channel}')
+    String channel;
+
     SunEvent event
-    SunEventPublishTask task
+    SunEventPublisher task
 
     def setup() {
         event = new SunEvent(NOON, now())
         task = taskProvider.get()
         task.setEvent(event)
-        redis.delete("job-lock:default:" + LOCK_NAME)
+        redis.delete("job-lock:default:" + LOCK)
     }
 
     def "Should publish event"() {
@@ -38,7 +41,7 @@ class SunEventPublishTaskSpec extends Specification {
         thread.start()
         thread.join()
         then:
-        1 * redis.convertAndSend(QUEUE_NAME, event)
+        1 * redis.convertAndSend(channel, event)
     }
 
     def "Should not publish event when not a leader"() {
@@ -51,7 +54,7 @@ class SunEventPublishTaskSpec extends Specification {
         for (thread in threads) thread.start()
         for (thread in threads) thread.join()
         then:
-        1 * redis.convertAndSend(QUEUE_NAME, event)
+        1 * redis.convertAndSend(channel, event)
     }
 
     def "Should publish event after lock"() {
@@ -66,6 +69,6 @@ class SunEventPublishTaskSpec extends Specification {
         thread.start()
         thread.join()
         then:
-        2 * redis.convertAndSend(QUEUE_NAME, event)
+        2 * redis.convertAndSend(channel, event)
     }
 }

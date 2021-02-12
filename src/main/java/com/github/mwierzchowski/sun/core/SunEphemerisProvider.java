@@ -24,7 +24,7 @@ import static com.github.mwierzchowski.sun.core.SunEventType.SUNSET;
 @Service
 @RequiredArgsConstructor
 public class SunEphemerisProvider {
-    public static final String CACHE_NAME = "sun-ephemeris:provider";
+    public static final String CACHE = "sun-ephemeris:provider";
 
     private final SunriseSunsetApi api;
     private final ApplicationEventPublisher publisher;
@@ -35,8 +35,8 @@ public class SunEphemerisProvider {
     @Value("${location.longitude}")
     private Double longitude;
 
-    @Retry(name = "SunEphemerisProvider")
-    @Cacheable(cacheNames = {CACHE_NAME}, key = "#date.toString()")
+    @Retry(name = "SunEphemerisProvider") //"${provider.cache}"
+    @Cacheable(cacheNames = CACHE, key = "#date.toString()")
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
         try {

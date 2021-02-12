@@ -1,4 +1,4 @@
-# Application info
+# Info
 info.app:
   name: ${project.name}
   description: ${project.description}
@@ -36,15 +36,17 @@ resilience4j.retry.instances:
     waitDuration: 1s
     enableExponentialBackoff: true
     exponentialBackoffMultiplier: 2
-  SunEventPublisher:
+  SunEventPublishScheduler:
     maxRetryAttempts: 120
     waitDuration: 60s
 
-# Application specific
+# Application
 init-on-startup: true
-sunrise-sunset.path: 'https://api.sunrise-sunset.org:443'
 location:
   latitude: 52.23
   longitude: 21.01
-schedule-cron: '0 0 0 * * *'
-publish-lock-duration: 3m
+provider.path: 'https://api.sunrise-sunset.org:443'
+scheduler.cron: '0 0 0 * * *'
+publisher:
+  lock-duration: 3m
+  channel: 'sun-ephemeris:events'

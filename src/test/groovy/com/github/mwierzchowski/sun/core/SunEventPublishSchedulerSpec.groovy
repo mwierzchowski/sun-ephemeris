@@ -16,13 +16,13 @@ import static java.time.ZoneOffset.UTC
 
 class SunEventPublishSchedulerSpec extends Specification {
     SunEphemerisProvider ephemerisProvider = Mock()
-    Provider<SunEventPublishTask> taskProvider = Mock() {
-        get() >> new SunEventPublishTask(null)
+    Provider<SunEventPublisher> publisherProvider = Mock() {
+        get() >> new SunEventPublisher(null)
     }
     TaskScheduler taskScheduler = Mock()
     ApplicationEventPublisher statusPublisher = Mock()
     Clock clock = fixed(of(2021, 1, 27, 11, 59).toInstant(UTC), systemDefault())
-    SunEventPublishScheduler publishScheduler = new SunEventPublishScheduler(ephemerisProvider, taskProvider, taskScheduler, statusPublisher, clock)
+    SunEventPublishScheduler publishScheduler = new SunEventPublishScheduler(ephemerisProvider, publisherProvider, taskScheduler, statusPublisher, clock)
 
     def "Should plan remaining events for today"() {
         given:

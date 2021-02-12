@@ -9,7 +9,7 @@ spring.redis:
   port: '\${embedded.redis.port}'
   password: '\${embedded.redis.password}'
 
-# Application specific
+# Application
 init-on-startup: false
-schedule-cron: '-'
-sunrise-sunset.path: 'http://localhost:\${wiremock.server.port}/sunrise-sunset'
+provider.path: 'http://localhost:\${wiremock.server.port}/sunrise-sunset'
+scheduler.cron: '-'

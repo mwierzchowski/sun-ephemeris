@@ -11,7 +11,7 @@ import spock.lang.Specification
 
 import java.time.LocalDate
 
-import static com.github.mwierzchowski.sun.core.SunEphemerisProvider.CACHE_NAME
+import static com.github.mwierzchowski.sun.core.SunEphemerisProvider.CACHE
 import static com.github.tomakehurst.wiremock.client.WireMock.*
 import static com.github.tomakehurst.wiremock.stubbing.Scenario.STARTED
 import static org.apache.http.HttpHeaders.CONTENT_TYPE
@@ -37,7 +37,7 @@ class SunEphemerisProviderSpec extends Specification {
 
     def setup() {
         reset()
-        cacheManager.getCache(CACHE_NAME).clear()
+        cacheManager.getCache(CACHE).clear()
     }
 
     def "Should provide ephemeris"() {

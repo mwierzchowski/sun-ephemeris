@@ -20,14 +20,14 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class SunEventPublishScheduler {
     private final SunEphemerisProvider ephemerisProvider;
-    private final Provider<SunEventPublishTask> taskProvider;
+    private final Provider<SunEventPublisher> publisherProvider;
     private final TaskScheduler taskScheduler;
     private final ApplicationEventPublisher statusPublisher;
     private final Clock clock;
 
-    @Scheduled(cron = "${schedule-cron}")
+    @Scheduled(cron = "${scheduler.cron}")
     @EventListener(classes = ApplicationReadyEvent.class, condition = "@application.initOnStartup")
-    @Retry(name = "SunEventPublisher", fallbackMethod = "scheduleEventsFallback")
+    @Retry(name = "SunEventPublishScheduler", fallbackMethod = "scheduleEventsFallback")
     public void scheduleEvents() {
         LOG.info("Scheduling today events publication");
         var today = LocalDate.now(clock);
@@ -51,9 +51,9 @@ public class SunEventPublishScheduler {
             LOG.warn("Event {} passed at {} and will not be published today", event.getType(), eventTime);
         } else {
             LOG.info("Scheduling event {} publication at {}", event.getType(), eventTime);
-            var task = taskProvider.get();
-            task.setEvent(event);
-            taskScheduler.schedule(task, event.getTimestamp());
+            var publisher = publisherProvider.get();
+            publisher.setEvent(event);
+            taskScheduler.schedule(publisher, event.getTimestamp());
         }
     }
 
