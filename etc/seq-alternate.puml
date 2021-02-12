@@ -28,7 +28,7 @@ activate PublishScheduler
         PublishScheduler <-- Provider : Ephemeris
     deactivate Provider
 
-    note right of PublishScheduler : PublishTask setup same as on a happy path
+    note right of PublishScheduler : Publisher setup same as on a happy path
 
     Cron <-- PublishScheduler
 deactivate PublishScheduler

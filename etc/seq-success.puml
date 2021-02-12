@@ -22,8 +22,8 @@ activate PublishScheduler
     deactivate Provider
 
     loop for each Event
-        create PublishTask
-        PublishScheduler -> PublishTask : new
+        create Publisher
+        PublishScheduler -> Publisher : new
         PublishScheduler -> TaskScheduler : schedule(task)
     end
 
@@ -33,16 +33,16 @@ deactivate PublishScheduler
 ... Later, same day ...
 
 loop for each Event
-    TaskScheduler -> PublishTask : run
-    activate PublishTask
-        PublishTask -> Redis : acquire lock
+    TaskScheduler -> Publisher : run
+    activate Publisher
+        Publisher -> Redis : acquire lock
         note left : Annotation declarative lock
         activate Redis
-            PublishTask <-- Redis : lock
+            Publisher <-- Redis : lock
         deactivate Redis
-        PublishTask -> Redis : enqueue
-        TaskScheduler <-- PublishTask
-    deactivate PublishTask
+        Publisher -> Redis : enqueue
+        TaskScheduler <-- Publisher
+    deactivate Publisher
 end
 
 @enduml
