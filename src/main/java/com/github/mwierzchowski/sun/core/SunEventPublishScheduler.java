@@ -3,8 +3,10 @@ package com.github.mwierzchowski.sun.core;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class SunEventPublishScheduler {
     private final Clock clock;
 
     @Scheduled(cron = "${sun-ephemeris.schedule-cron}")
+    @EventListener(classes = ApplicationReadyEvent.class, condition = "@application.initOnStartup")
     @Retry(name = "SunEventPublisher", fallbackMethod = "scheduleEventsFallback")
     public void scheduleEvents() {
         LOG.info("Scheduling today events publication");
