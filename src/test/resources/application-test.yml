@@ -11,5 +11,8 @@ spring.redis:
 
 # Application
 init-on-startup: false
+location:
+  latitude: 52.23
+  longitude: 21.01
 provider.path: 'http://localhost:\${wiremock.server.port}/sunrise-sunset'
 scheduler.cron: '-'

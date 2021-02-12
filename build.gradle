@@ -114,5 +114,9 @@ dockerCompose {
 }
 
 bootRun {
-	environment = ["spring.profiles.active": "debug"]
+	environment = [
+			"spring.profiles.active": "debug",
+			"location.latitude": 52.23,
+			"location.longitude": 21.01
+	]
 }

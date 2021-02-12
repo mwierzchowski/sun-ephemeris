@@ -42,9 +42,6 @@ resilience4j.retry.instances:
 
 # Application
 init-on-startup: true
-location:
-  latitude: 52.23
-  longitude: 21.01
 provider.path: 'https://api.sunrise-sunset.org:443'
 scheduler.cron: '0 0 0 * * *'
 publisher:
