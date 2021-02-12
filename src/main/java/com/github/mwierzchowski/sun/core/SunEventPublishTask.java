@@ -24,7 +24,7 @@ public class SunEventPublishTask implements Runnable {
     private SunEvent event;
 
     @Override
-    @SchedulerLock(name = LOCK_NAME, lockAtLeastFor = "${sun-ephemeris.publish-lock-duration}")
+    @SchedulerLock(name = LOCK_NAME, lockAtLeastFor = "${publish-lock-duration}")
     public void run() {
         LOG.info("Publishing event {}", event.getType());
         redis.convertAndSend(QUEUE_NAME, event);

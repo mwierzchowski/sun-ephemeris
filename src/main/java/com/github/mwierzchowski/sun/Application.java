@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
-	@Value("${sun-ephemeris.init-on-startup:true}")
+	@Value("${init-on-startup:true}")
 	@Getter Boolean initOnStartup;
 
 	public static void main(String[] args) {

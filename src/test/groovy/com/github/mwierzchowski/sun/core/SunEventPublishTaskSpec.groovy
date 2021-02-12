@@ -13,7 +13,7 @@ import static com.github.mwierzchowski.sun.core.SunEventPublishTask.QUEUE_NAME
 import static com.github.mwierzchowski.sun.core.SunEventType.NOON
 import static java.time.Instant.now
 
-@Integration(properties = ["sun-ephemeris.publish-lock-duration=1s"])
+@Integration(properties = ["publish-lock-duration=1s"])
 class SunEventPublishTaskSpec extends Specification {
     @Autowired
     Provider<SunEventPublishTask> taskProvider

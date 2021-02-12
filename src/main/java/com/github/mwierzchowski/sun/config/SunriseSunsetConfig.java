@@ -1,8 +1,8 @@
 package com.github.mwierzchowski.sun.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 import org.sunrisesunset.api.SunriseSunsetApi;
 import org.sunrisesunset.invoker.ApiClient;
@@ -10,8 +10,7 @@ import org.sunrisesunset.invoker.ApiClient;
 @Configuration
 public class SunriseSunsetConfig {
     @Bean
-    ApiClient sunriseSunsetApiClient(Environment env) {
-        var path = env.getRequiredProperty("sun-ephemeris.sunrise-sunset.path");
+    ApiClient sunriseSunsetApiClient(@Value("${sunrise-sunset.path}") String path) {
         return new ApiClient(new RestTemplate())
                 .setBasePath(path);
     }

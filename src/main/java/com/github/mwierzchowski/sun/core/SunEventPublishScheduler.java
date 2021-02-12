@@ -25,7 +25,7 @@ public class SunEventPublishScheduler {
     private final ApplicationEventPublisher statusPublisher;
     private final Clock clock;
 
-    @Scheduled(cron = "${sun-ephemeris.schedule-cron}")
+    @Scheduled(cron = "${schedule-cron}")
     @EventListener(classes = ApplicationReadyEvent.class, condition = "@application.initOnStartup")
     @Retry(name = "SunEventPublisher", fallbackMethod = "scheduleEventsFallback")
     public void scheduleEvents() {

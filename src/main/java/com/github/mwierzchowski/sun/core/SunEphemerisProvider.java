@@ -29,10 +29,10 @@ public class SunEphemerisProvider {
     private final SunriseSunsetApi api;
     private final ApplicationEventPublisher publisher;
 
-    @Value("${sun-ephemeris.location.latitude}")
+    @Value("${location.latitude}")
     private Double latitude;
 
-    @Value("${sun-ephemeris.location.longitude}")
+    @Value("${location.longitude}")
     private Double longitude;
 
     @Retry(name = "SunEphemerisProvider")

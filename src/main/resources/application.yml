@@ -40,12 +40,11 @@ resilience4j.retry.instances:
     maxRetryAttempts: 120
     waitDuration: 60s
 
-# Application
-sun-ephemeris:
-  init-on-startup: true
-  sunrise-sunset.path: 'https://api.sunrise-sunset.org:443'
-  location:
-    latitude: 52.23
-    longitude: 21.01
-  schedule-cron: '0 0 0 * * *'
-  publish-lock-duration: 3m
+# Application specific
+init-on-startup: true
+sunrise-sunset.path: 'https://api.sunrise-sunset.org:443'
+location:
+  latitude: 52.23
+  longitude: 21.01
+schedule-cron: '0 0 0 * * *'
+publish-lock-duration: 3m
