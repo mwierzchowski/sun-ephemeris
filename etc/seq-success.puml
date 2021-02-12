@@ -24,7 +24,7 @@ activate PublishScheduler
     loop for each Event
         create Publisher
         PublishScheduler -> Publisher : new
-        PublishScheduler -> TaskScheduler : schedule(task)
+        PublishScheduler -> TaskScheduler : schedule(publisher)
     end
 
     Cron <-- PublishScheduler
