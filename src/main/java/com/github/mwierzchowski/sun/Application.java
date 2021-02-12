@@ -7,8 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
+	@Getter
 	@Value("${init-on-startup:true}")
-	@Getter Boolean initOnStartup;
+	Boolean initOnStartup;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
