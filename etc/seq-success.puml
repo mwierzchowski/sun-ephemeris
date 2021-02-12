@@ -21,7 +21,7 @@ activate PublishScheduler
         PublishScheduler <-- Provider : Ephemeris
     deactivate Provider
 
-    loop for each Event
+    loop for each event
         create Publisher
         PublishScheduler -> Publisher : new
         PublishScheduler -> TaskScheduler : schedule(publisher)
@@ -32,7 +32,7 @@ deactivate PublishScheduler
 
 ... Later, same day ...
 
-loop for each Event
+loop for each publisher
     TaskScheduler -> Publisher : run
     activate Publisher
         Publisher -> Redis : acquire lock
