@@ -2,6 +2,7 @@ package com.github.mwierzchowski.sun.core;
 
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,6 +22,7 @@ import static com.github.mwierzchowski.sun.core.SunEventType.SUNRISE;
 import static com.github.mwierzchowski.sun.core.SunEventType.SUNSET;
 
 @Slf4j
+@Setter
 @Service
 @RequiredArgsConstructor
 public class SunEphemerisProvider {

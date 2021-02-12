@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Slf4j
+@Setter
 @Component
 @Scope(SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
@@ -23,7 +24,6 @@ public class SunEventPublisher implements Runnable {
     @Value("${publisher.channel}")
     private String channel;
 
-    @Setter
     private SunEvent event;
 
     @Override
