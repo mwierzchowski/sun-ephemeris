@@ -35,7 +35,7 @@ public class SunEphemerisProvider {
     @Value("${location.longitude}")
     private Double longitude;
 
-    @Retry(name = "SunEphemerisProvider") //"${provider.cache}"
+    @Retry(name = "SunEphemerisProvider")
     @Cacheable(cacheNames = CACHE, key = "#date.toString()")
     public SunEphemeris sunEphemerisFor(LocalDate date) {
         LOG.info("Requesting sun ephemeris for {}", date);
