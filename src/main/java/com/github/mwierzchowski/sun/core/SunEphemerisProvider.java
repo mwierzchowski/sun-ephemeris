@@ -26,7 +26,7 @@ import static com.github.mwierzchowski.sun.core.SunEventType.SUNSET;
 @Service
 @RequiredArgsConstructor
 public class SunEphemerisProvider {
-    public static final String CACHE = "sun-ephemeris:provider";
+    public static final String CACHE = "sun-ephemeris:provider:cache";
 
     private final SunriseSunsetApi api;
     private final ApplicationEventPublisher publisher;
