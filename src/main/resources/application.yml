@@ -41,9 +41,10 @@ resilience4j.retry.instances:
     waitDuration: 60s
 
 # Application
-init-on-startup: true
 provider.path: 'https://api.sunrise-sunset.org:443'
-scheduler.cron: '0 0 0 * * *'
+scheduler:
+  init-on-start: true
+  cron: '0 0 0 * * *'
 publisher:
   lock-duration: 3m
   channel: 'sun-ephemeris:events'

@@ -1,8 +1,11 @@
 package com.github.mwierzchowski.sun.core;
 
 import io.github.resilience4j.retry.annotation.Retry;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,6 +19,8 @@ import java.time.Clock;
 import java.time.LocalDate;
 
 @Slf4j
+@Setter
+@Getter
 @Service
 @RequiredArgsConstructor
 public class SunEventPublishScheduler {
@@ -25,8 +30,11 @@ public class SunEventPublishScheduler {
     private final ApplicationEventPublisher statusPublisher;
     private final Clock clock;
 
+    @Value("${scheduler.init-on-start}")
+    private Boolean initOnStart;
+
     @Scheduled(cron = "${scheduler.cron}")
-    @EventListener(classes = ApplicationReadyEvent.class, condition = "@application.initOnStartup")
+    @EventListener(classes = ApplicationReadyEvent.class, condition = "@sunEventPublishScheduler.initOnStart")
     @Retry(name = "SunEventPublishScheduler", fallbackMethod = "scheduleEventsFallback")
     public void scheduleEvents() {
         LOG.info("Scheduling today events publication");
