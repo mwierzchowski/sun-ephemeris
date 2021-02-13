@@ -43,8 +43,8 @@ public class SunEphemerisProvider {
         LOG.info("Requesting sun ephemeris for {}", date);
         try {
             var response = api.sunriseSunset(latitude, longitude, date.toString(), 0);
-            publisher.publishEvent(new SuccessEvent(response));
             LOG.debug("Sunrise-Sunset response: {}", response);
+            publisher.publishEvent(new SuccessEvent(response));
             return sunEphemerisFrom(response.getResults());
         } catch (Exception ex) {
             publisher.publishEvent(new FailureEvent(ex));
@@ -63,13 +63,13 @@ public class SunEphemerisProvider {
     }
 
     public static class SuccessEvent extends ApplicationEvent {
-        public SuccessEvent(SunriseSunsetResponse response) {
+        SuccessEvent(SunriseSunsetResponse response) {
             super(response);
         }
     }
 
     public static class FailureEvent extends ApplicationEvent {
-        public FailureEvent(Exception exception) {
+        FailureEvent(Exception exception) {
             super(exception);
         }
     }

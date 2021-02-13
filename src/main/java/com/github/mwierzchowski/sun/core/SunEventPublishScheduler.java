@@ -40,7 +40,7 @@ public class SunEventPublishScheduler {
         LOG.info("Scheduling today events publication");
         var today = LocalDate.now(clock);
         var ephemeris = ephemerisProvider.sunEphemerisFor(today);
-        ephemeris.stream().forEach(this::scheduleEvent);
+        ephemeris.stream().forEach(this::schedule);
         statusPublisher.publishEvent(new SuccessEvent(ephemeris));
     }
 
@@ -50,10 +50,10 @@ public class SunEventPublishScheduler {
         var yesterday = LocalDate.now(clock).minusDays(1);
         ephemerisProvider.sunEphemerisFor(yesterday).stream()
                 .map(old -> new SunEvent(old.getType(), old.getTimestamp().plusSeconds(24L * 60 * 60)))
-                .forEach(this::scheduleEvent);
+                .forEach(this::schedule);
     }
 
-    private void scheduleEvent(SunEvent event) {
+    private void schedule(SunEvent event) {
         var eventTime = event.getLocalTime(clock);
         if (event.isStale(clock)) {
             LOG.warn("Event {} passed at {} and will not be published today", event.getType(), eventTime);
@@ -66,13 +66,13 @@ public class SunEventPublishScheduler {
     }
 
     public static class SuccessEvent extends ApplicationEvent {
-        public SuccessEvent(SunEphemeris ephemeris) {
+        SuccessEvent(SunEphemeris ephemeris) {
             super(ephemeris);
         }
     }
 
     public static class FailureEvent extends ApplicationEvent {
-        public FailureEvent(Throwable throwable) {
+        FailureEvent(Throwable throwable) {
             super(throwable);
         }
     }
