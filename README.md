@@ -49,7 +49,7 @@ Overview
 Service does not calculate sun ephemeris on its own. Instead, it uses API exposed by
 [Sunrise-Sunset](https://sunrise-sunset.org) site (kudos for great work!). Client code is generated from
 [specification](/etc/sunrise-sunset-spec.yml) with OpenAPI Generator. To optimize network traffic and avoid risk of
-abusing API usage rules, received ephemeris for is cached in Redis under a date key.
+abusing API usage rules, received ephemeris is cached in Redis under a date key.
 
 **Please note:** Since, it is assumed that location is static configuration and never changes during service lifetime,
 location is not part of the key.
@@ -73,7 +73,7 @@ lock and only winner publishes event. Following diagram presents events publishi
 Sunrise-Sunset is an external endpoint that might be down at any time without a notice. In order to mitigate this risk,
 service retries calls with an exponentially growing backoff time. Since data is requested shortly after midnight, 
 it should give enough time for Sunrise-Sunset site to recover before first ephemeris event (dawn) time. However, if
-outage continues, publish scheduler uses previous day ephemeris that should be accurate enough as a replacement.
+outage continues, publish scheduler uses previous day ephemeris which should be accurate enough as a replacement.
 Following diagram presents fallback sequence:
 ![Alternate Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/mwierzchowski/sun-ephemeris/master/etc/seq-alternate.puml)
 
