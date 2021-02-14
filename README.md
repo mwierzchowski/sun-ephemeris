@@ -51,7 +51,7 @@ Service does not calculate sun ephemeris on its own. Instead, it uses API expose
 [specification](/etc/sunrise-sunset-spec.yml) with OpenAPI Generator. To optimize network traffic and avoid risk of
 abusing API usage rules, received ephemeris for is cached in Redis under a date key.
 
-**Please note**: Since, it is assumed that location is static configuration and never changes during service lifetime,
+**Please note:** Since, it is assumed that location is static configuration and never changes during service lifetime,
 location is not part of the key.
 
 Each day, shortly after midnight, publish scheduler requests new day ephemeris and schedules tasks that will publish
@@ -63,7 +63,7 @@ Following sun ephemeris events are available:
 - sunset
 - dusk 
 
-**Please note**: Events on Redis channel and REST endpoint have the same structure. It is documented in endpoint
+**Please note:** Events on Redis channel and REST endpoint have the same structure. It is documented in endpoint
 OpenAPI specification.
   
 Since there might be more than one instance of the service (e.g. due to HA requirements), publishers try to acquire a
@@ -80,7 +80,18 @@ Following diagram presents fallback sequence:
 Usage
 -----
 
-> TODO - describe configuration (e.g. localization, profile).
+Service is distributed as a Docker image. The latest version (including release candidates) is available in
+[DockerHub](https://hub.docker.com/repository/docker/mwierzchowski/sun-ephemeris) under tag
+`mwierzchowski/sun-ephemeris:latest`. 
+
+In order to start container, at minimum following environment variables have to be provided:
+- `location.latitude` and `location.longitude` - coordinates for ephemeris calculation
+- `spring.redis.host` - Redis host name (assuming default port is used)
+
+All properties are listed in [application.yml](/src/main/resources/application.yml).
+
+**Please note:** Service depends on Spring Boot autoconfiguration feature. See [dependencies](/build.gradle) for
+details.  
 
 Developer Guide
 ---------------
