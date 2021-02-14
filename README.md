@@ -142,7 +142,6 @@ Service                                                               | URL     
 [Swagger UI](https://swagger.io/tools/swagger-ui/)                    | http://localhost:83/swagger | n/a
 [Redis](https://redislabs.com)                                        | http://localhost:6379       | n/a
 
-
 ### Build
 Project build is powered by [Gradle wrapper](https://gradle.org) with additional plugins (e.g. `java`, `spring-boot`,
 `docker-compose`). Few most useful build tasks:
