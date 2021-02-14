@@ -54,36 +54,33 @@ abusing API usage rules, received ephemeris for is cached in Redis under a date 
 **Please note**: Since, it is assumed that location is static configuration and never changes during service lifetime,
 location is not part of the key.
 
-Each day, shortly after midnight, publish scheduler requests new ephemeris and schedules tasks that will publish events
-to Redis channel at the event time. Following events are supported:
+Each day, shortly after midnight, publish scheduler requests new day ephemeris and schedules tasks that will publish
+events to Redis channel at the event time. The same data is also available as REST endpoint for interested parties.
+Following sun ephemeris events are available:
 - dawn
 - sunrise
 - noon
 - sunset
 - dusk 
 
-**Please note**: Events structure is described in OpenAPI specification exposed by service.
+**Please note**: Events on Redis channel and REST endpoint share the same structure. It is documented in endpoint
+OpenAPI specification.
   
 Since there might be more than one instance of the service (e.g. due to HA requirements), publishers try to acquire a
-lock and only winner publishes event.
-
-Following diagram presents events publishing sequence:
+lock and only winner publishes event. Following diagram presents events publishing sequence:
 ![Success Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/mwierzchowski/sun-ephemeris/master/etc/seq-success.puml)
 
 Sunrise-Sunset is an external endpoint that might be down at any time without a notice. In order to mitigate this risk,
 service retries calls with an exponentially growing backoff time. Since data is requested shortly after midnight, 
 it should give enough time for Sunrise-Sunset site to recover before first ephemeris event (dawn) time. However, if
-outage continues, publish scheduler uses previous day ephemeris that should be accurate enough replacement.
-
-Following diagram presents fallback flow:
+outage continues, publish scheduler uses previous day ephemeris that should be accurate enough replacement. Following
+diagram presents fallback flow:
 ![Alternate Sequence](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/mwierzchowski/sun-ephemeris/master/etc/seq-alternate.puml)
-
-> TODO - describe configuration (e.g. localization, profile). Consider moving default localization to bootRun .
 
 Usage
 -----
 
-> TODO
+> TODO - describe configuration (e.g. localization, profile).
 
 Developer Guide
 ---------------
