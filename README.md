@@ -90,8 +90,8 @@ In order to start container, at minimum following environment variables have to 
 
 All properties are listed in [application.yml](/src/main/resources/application.yml).
 
-**Please note:** Service depends on Spring Boot autoconfiguration feature. See [dependencies](/build.gradle) for
-details.  
+**Please note:** Service depends on Spring Boot autoconfiguration feature that may be configured with additional
+properties. See [dependencies](/build.gradle) for list of configured beans.  
 
 Developer Guide
 ---------------
