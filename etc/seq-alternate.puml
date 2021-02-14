@@ -1,37 +1,37 @@
 @startuml
 
-Cron -> PublishScheduler : scheduleEvents
-activate PublishScheduler
-    PublishScheduler -> Provider : sunEphemerisFor(today)
-    activate Provider
+Cron -> SunEventPublishScheduler : scheduleEvents
+activate SunEventPublishScheduler
+    SunEventPublishScheduler -> SunEphemerisProvider : sunEphemerisFor(today)
+    activate SunEphemerisProvider
         database Redis
-        Provider -> Redis : get(date)
+        SunEphemerisProvider -> Redis : get(date)
         activate Redis
-            Provider <-- Redis : null
+            SunEphemerisProvider <-- Redis : null
         deactivate Redis
-        boundary SunriseAPI
-        Provider ->x SunriseAPI : HTTP
-        Provider ->x SunriseAPI : HTTP
+        boundary SunriseSunset
+        SunEphemerisProvider ->x SunriseSunset : HTTP
+        SunEphemerisProvider ->x SunriseSunset : HTTP
         note right : Failed request retries...
-        Provider ->x SunriseAPI : HTTP
-        PublishScheduler <-- Provider : error
+        SunEphemerisProvider ->x SunriseSunset : HTTP
+        SunEventPublishScheduler <-- SunEphemerisProvider : error
         note right : Retry limit has been reached
-    deactivate Provider
+    deactivate SunEphemerisProvider
 
-    note right of PublishScheduler : Annotation declarative fallback
-    PublishScheduler -> Provider : sunEphemerisFor(yesterday)
-    activate Provider
-        Provider -> Redis : get(date - 1)
+    note right of SunEventPublishScheduler : Annotation declarative fallback
+    SunEventPublishScheduler -> SunEphemerisProvider : sunEphemerisFor(yesterday)
+    activate SunEphemerisProvider
+        SunEphemerisProvider -> Redis : get(date - 1)
         activate Redis
-            Provider <-- Redis : Ephemeris
+            SunEphemerisProvider <-- Redis : SunEphemeris
         deactivate Redis
-        PublishScheduler <-- Provider : Ephemeris
-    deactivate Provider
+        SunEventPublishScheduler <-- SunEphemerisProvider : SunEphemeris
+    deactivate SunEphemerisProvider
 
-    note right of PublishScheduler : Publisher setup same as on a happy path
+    note right of SunEventPublishScheduler : Publisher setup same as on a happy path
 
-    Cron <-- PublishScheduler
-deactivate PublishScheduler
+    Cron <-- SunEventPublishScheduler
+deactivate SunEventPublishScheduler
 
 @enduml
 

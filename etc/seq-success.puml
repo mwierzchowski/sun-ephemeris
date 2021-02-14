@@ -1,48 +1,48 @@
 @startuml
 
-Cron -> PublishScheduler : scheduleEvents
-activate PublishScheduler
-    PublishScheduler -> Provider : sunEphemerisFor(date)
-    activate Provider
+Cron -> SunEventPublishScheduler : scheduleEvents
+activate SunEventPublishScheduler
+    SunEventPublishScheduler -> SunEphemerisProvider : sunEphemerisFor(date)
+    activate SunEphemerisProvider
         database Redis
-        Provider -> Redis : get(date)
+        SunEphemerisProvider -> Redis : get(date)
         note right : Annotation declarative cache
         activate Redis
-            Provider <-- Redis : null
+            SunEphemerisProvider <-- Redis : null
         deactivate Redis
-        boundary SunriseAPI
-        Provider -> SunriseAPI : HTTP
+        boundary SunriseSunset
+        SunEphemerisProvider -> SunriseSunset : HTTP
         note right : OpenAPI generated client
-        activate SunriseAPI
-            Provider <-- SunriseAPI : JSON
-        deactivate SunriseAPI
-        Provider -> Redis : set
+        activate SunriseSunset
+            SunEphemerisProvider <-- SunriseSunset : JSON
+        deactivate SunriseSunset
+        SunEphemerisProvider -> Redis : set
         note right : Annotation declarative cache
-        PublishScheduler <-- Provider : Ephemeris
-    deactivate Provider
+        SunEventPublishScheduler <-- SunEphemerisProvider : SunEphemeris
+    deactivate SunEphemerisProvider
 
     loop for each event
-        create Publisher
-        PublishScheduler -> Publisher : new
-        PublishScheduler -> TaskScheduler : schedule(publisher)
+        create SunEventPublisher
+        SunEventPublishScheduler -> SunEventPublisher : new
+        SunEventPublishScheduler -> TaskScheduler : schedule(SunEventPublisher)
     end
 
-    Cron <-- PublishScheduler
-deactivate PublishScheduler
+    Cron <-- SunEventPublishScheduler
+deactivate SunEventPublishScheduler
 
 ... Later, same day ...
 
-loop for each publisher
-    TaskScheduler -> Publisher : run
-    activate Publisher
-        Publisher -> Redis : acquire lock
+loop for each SunEventPublisher
+    TaskScheduler -> SunEventPublisher : run
+    activate SunEventPublisher
+        SunEventPublisher -> Redis : acquire lock
         note left : Annotation declarative lock
         activate Redis
-            Publisher <-- Redis : lock
+            SunEventPublisher <-- Redis : lock
         deactivate Redis
-        Publisher -> Redis : enqueue
-        TaskScheduler <-- Publisher
-    deactivate Publisher
+        SunEventPublisher -> Redis : enqueue
+        TaskScheduler <-- SunEventPublisher
+    deactivate SunEventPublisher
 end
 
 @enduml
